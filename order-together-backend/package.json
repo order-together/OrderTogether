@@ -1,0 +1,44 @@
+{
+  "name": "nodeserver-v1",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "type": "commonjs",
+  "!!!Note!!!:": {
+    "__make_sure_sqlite_is_version_5.0.2": "",
+    "__make_sure_typeorm_is_0.2.45": "",
+    "__Good_Luck_to_you:": "A developer like diamonds in the rough from ITLab..."
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/helmet": "^4.0.0",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^16.11.10",
+    "node-dev": "^8.0.0",
+    "ts-node": "10.4.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "class-validator": "^0.14.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.17.2",
+    "helmet": "^6.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "mysql": "^2.18.1",
+    "react-router-dom": "^6.21.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "0.2.45"
+  },
+  "scripts": {
+    "start": "nodemon src/app.ts",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "db:seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+  }
+}
