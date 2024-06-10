@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-
+import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
+import Button from '@mui/material/Button'
 function App() {
   return (
     <div className="App">
@@ -15,7 +16,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React<AccessAlarmsIcon/>
+          <Button variant="contained">Contained</Button>
         </a>
       </header>
     </div>
