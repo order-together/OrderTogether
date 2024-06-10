@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          1Learn React<AccessAlarmsIcon/>
+          Learn React<AccessAlarmsIcon/>
           <Button variant="contained">Contained</Button>
         </a>
       </header>
