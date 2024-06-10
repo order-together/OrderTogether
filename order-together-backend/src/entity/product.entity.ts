@@ -16,6 +16,9 @@ export class ProductEntity extends BaseTemplate{
     description: string | null = null
 
     @Column({nullable: true, default: null})
+    productURL: string | null = null
+
+    @Column({nullable: true, default: null})
     imgURL: string | null = null
 
     @Column({
