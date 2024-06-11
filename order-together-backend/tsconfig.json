@@ -9,7 +9,8 @@
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true
+      "sourceMap": true,
+      "baseUrl": "./"
    },
    "include": ["src/**/*.ts", "jest.config.ts", "__test__/**/*.test.ts"]
 }
