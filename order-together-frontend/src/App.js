@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React<AccessAlarmsIcon/> //Harry is here1. Qing is here2. Ethan-test is here3.
+          Learn React<AccessAlarmsIcon/> //Harry is here1. Qing is here3. Ethan-test is here3.
           <Button variant="contained">Contained</Button>
         </a>
       </header>
