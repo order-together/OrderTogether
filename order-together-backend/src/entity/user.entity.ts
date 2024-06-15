@@ -11,9 +11,9 @@ import {OrderEntity} from "./order.entity";
 export class UserEntity extends BaseTemplate {
     @Column({nullable: true, default: null})
     @Length(1, 100)
-    userName: string | null = null
+    username: string | null = null
 
-    @Column()
+    @Column({nullable: true, default: null})
     @IsEmail()
     @Length(5, 150)
     email: string
@@ -51,6 +51,8 @@ export class UserEntity extends BaseTemplate {
     activationTokenExpires: Date
 
     @Column({
+        nullable: true,
+        default: null,
         type: 'decimal',
         precision: 2,
         scale: 1
@@ -59,6 +61,8 @@ export class UserEntity extends BaseTemplate {
     initiatorRating: number | null = null
 
     @Column({
+        nullable: true,
+        default: null,
         type: 'decimal',
         precision: 2,
         scale: 1
@@ -67,6 +71,8 @@ export class UserEntity extends BaseTemplate {
     participantRating: number | null = null
 
     @Column({
+        nullable: true,
+        default: null,
         type: 'decimal',
         precision: 2,
         scale: 1
@@ -74,7 +80,7 @@ export class UserEntity extends BaseTemplate {
     @IsDecimal()
     overallRating: number | null = null
 
-    @Column({nullable: false, default: null})
+    @Column({nullable: true, default: null})
     status: string
 
     @OneToMany(() => RateEntity, rate => rate.ratedUser)
@@ -89,7 +95,7 @@ export class UserEntity extends BaseTemplate {
     @OneToMany(() => OrderEntity, order => order.user)
     orders: OrderEntity[]
 
-    @ManyToMany(()=> ProductEntity)
+    @ManyToMany(() => ProductEntity)
     @JoinTable()
     collectProducts: ProductEntity[]
 }
