@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import { Application } from 'express';
 import gDB from './initDataSource';
 import dotenv from 'dotenv-flow';
+import routes from "./route";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ const startServer = async () => {
         });
 
         app.use(bodyParser.json());
+        app.use('/', routes)
 
         app.listen(process.env.PORT, () => {
             console.log(`Express server has started on port ${process.env.PORT}`);
