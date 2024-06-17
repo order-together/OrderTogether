@@ -14,6 +14,9 @@ function App () {
         {/*<Route path="/" element={<MainLayout/>}>*/}
         {/*<Route path="/" element={<LogIn/>}></Route>*/}
           <Route path="login" element={<LogIn/>}/>
+          {/*<Route path="signup" element={<SignUp/>} />*/}
+        {/*</Route>*/}
+          {/*sijiang test*/}
           <Route path="signup" element={<SignUp/>}/>
       </Routes>
     </BrowserRouter>
