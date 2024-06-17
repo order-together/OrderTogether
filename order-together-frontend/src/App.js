@@ -15,6 +15,7 @@ function App () {
           <Route path="login" element={<LogIn/>}/>
           {/*<Route path="signup" element={<SignUp/>} />*/}
         {/*</Route>*/}
+          {/*sijiang test*/}
       </Routes>
     </BrowserRouter>
   )
