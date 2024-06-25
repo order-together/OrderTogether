@@ -37,13 +37,13 @@ export class ProductEntity extends BaseTemplate{
     @IsInt()
     currentQuantity: number | null = null
 
-    @Column({select: false})
+    @Column({nullable: true, default: null})
     expireAt: Date
 
     @Column({nullable: true, default: null})
     safetyDetect: string | null = null
 
-    @Column({nullable: false, default: null})
+    @Column({nullable: true, default: null})
     status: string | null = null
 
     @OneToMany(() => OrderEntity, order => order.product)
