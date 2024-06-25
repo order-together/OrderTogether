@@ -13,11 +13,11 @@ export abstract class BaseTemplate extends BaseEntity {
     @Column({default: false})
     isDelete: boolean
 
-    @Column({select: false})
+    @Column({select: false,default: () => 'CURRENT_TIMESTAMP'})
     @CreateDateColumn()
     createdAt: Date
 
-    @Column({select: false})
+    @Column({select: false,default: () => 'CURRENT_TIMESTAMP'})
     @UpdateDateColumn()
     updatedAt: Date
 }
