@@ -1,12 +1,14 @@
-import { Router } from 'express';
-import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controller/ProductController';
+import {Router} from "express";
+import ProductController from "../controller/ProductController";
+import UserController from "../controller/UserController";
 
-const router = Router();
 
-router.get('/products', getProducts);
-router.get('/products/:id', getProductById);
-router.post('/products', createProduct);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
+const router = Router()
 
-export default router;
+router.post('/initiate',ProductController.createProduct)
+router.get('/products', ProductController.getProducts);
+router.get('/products/:id', ProductController.getProductById);
+router.put('/products/:id', ProductController.updateProduct);
+router.delete('/products/:id', ProductController.deleteProduct);
+
+export default router
