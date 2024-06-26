@@ -1,71 +1,129 @@
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { ProductEntity } from '../entity/product.entity';
+import {ProductEntity} from "../entity/product.entity";
+import {Request, Response} from "express";
+import {uid} from "uid";
+import {UserEntity} from "../entity/user.entity";
 
-// get all products
-export const getProducts = async (req: Request, res: Response) => {
-  try {
-    const productRepository = getRepository(ProductEntity);
-    const products = await productRepository.find();
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching products', error });
-  }
-};
+class ProductController {
+    static createProduct = async (req: Request, res: Response) => {
+        try {
+            const {
+                creator,
+                imgURL,
+                productURL,
+                name,
+                price,
+                targetQuantity,
+                description
+            } = req.body
 
-// get single product
-export const getProductById = async (req: Request, res: Response) => {
-  try {
-    const productRepository = getRepository(ProductEntity);
-    const product = await productRepository.findOne(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+            const creatorId = await UserEntity.findOne({
+                where:{uid:creator}
+            })
+
+            const newProduct = ProductEntity.create({
+                creator:creatorId,
+                imgURL,
+                productURL,
+                name,
+                price,
+                targetQuantity,
+                description,
+            })
+
+            newProduct.uid=uid()
+
+
+            await newProduct.save()
+
+            return res.status(200).send({
+                newProduct
+            })
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
+        }
     }
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching product', error });
-  }
-};
 
-// create new product
-export const createProduct = async (req: Request, res: Response) => {
-  try {
-    const productRepository = getRepository(ProductEntity);
-    const newProduct = productRepository.create(req.body);
-    await productRepository.save(newProduct);
-    res.status(201).json(newProduct);
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating product', error });
-  }
-};
-
-// update product information
-export const updateProduct = async (req: Request, res: Response) => {
-  try {
-    const productRepository = getRepository(ProductEntity);
-    let product = await productRepository.findOne(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    // Get all products.
+    static getProducts = async (req: Request, res: Response) => {
+        try {
+            const products = await ProductEntity.find()
+            return res.status(200).send(products)
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
+        }
     }
-    productRepository.merge(product, req.body);
-    const updatedProduct = await productRepository.save(product);
-    res.status(200).json(updatedProduct);
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating product', error });
-  }
-};
 
-// delete product
-export const deleteProduct = async (req: Request, res: Response) => {
-  try {
-    const productRepository = getRepository(ProductEntity);
-    const product = await productRepository.findOne(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    // Get single product.
+    static getProductById = async (req: Request, res: Response) => {
+        try {
+            const product = await ProductEntity.findOne(req.params.id)
+            if (!product) {
+                return res.status(404).send({
+                    message: 'Product not found'
+                })
+            }
+            return res.status(200).send(product)
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
+        }
     }
-    await productRepository.remove(product);
-    res.status(200).json({ message: 'Product deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting product', error });
-  }
-};
+
+    // Update product
+    static updateProduct = async (req: Request, res: Response) => {
+        try {
+            const product = await ProductEntity.findOne(req.params.id)
+            if (!product) {
+                return res.status(404).send({
+                    message: 'Product not found'
+                })
+            }
+
+            ProductEntity.merge(product, req.body)
+            const updatedProduct = await product.save()
+
+            return res.status(200).send(updatedProduct)
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
+        }
+    }
+
+    // Delete product
+    static deleteProduct = async (req: Request, res: Response) => {
+        try {
+            const product = await ProductEntity.findOne(req.params.id)
+            if (!product) {
+                return res.status(404).send({
+                    message: 'Product not found'
+                })
+            }
+
+            await ProductEntity.remove(product)
+
+            return res.status(200).send({
+                message: 'Product deleted successfully'
+            })
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
+        }
+    }
+
+
+
+}
+
+export default ProductController
