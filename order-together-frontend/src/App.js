@@ -2,6 +2,11 @@ import logo from './logo.svg'
 import './App.css'
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms'
 import Button from '@mui/material/Button'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { MainLayout } from './component/public/MainLayout.js'
+import { LogIn } from './component/login/LogIn.js'
+import { SignUp } from './component/login/SignUp.js'
+import { Initiate } from './component/Initiate.js'
 
 function App () {
   return (
