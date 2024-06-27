@@ -14,6 +14,7 @@ function App () {
       <Routes>
         {/*<Route path="/" element={<MainLayout/>}>*/}
         {/*<Route path="/" element={<LogIn/>}></Route>*/}
+          <Route path="/" element={<LogIn/>}/>
           <Route path="login" element={<LogIn/>}/>
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
