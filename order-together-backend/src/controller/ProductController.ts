@@ -60,9 +60,9 @@ class ProductController {
     }
 
     // Get single product.
-    static getProductById = async (req: Request, res: Response) => {
+    static getProductByUid = async (req: Request, res: Response) => {
         try {
-            const product = await ProductEntity.findOne(req.params.id)
+            const product = await ProductEntity.findOne({ where: { uid: req.params.uid } })
             if (!product) {
                 return res.status(404).send({
                     message: 'Product not found'
@@ -80,7 +80,7 @@ class ProductController {
     // Update product
     static updateProduct = async (req: Request, res: Response) => {
         try {
-            const product = await ProductEntity.findOne(req.params.id)
+            const product = await ProductEntity.findOne({ where: { uid: req.params.uid } })
             if (!product) {
                 return res.status(404).send({
                     message: 'Product not found'
@@ -102,7 +102,7 @@ class ProductController {
     // Delete product
     static deleteProduct = async (req: Request, res: Response) => {
         try {
-            const product = await ProductEntity.findOne(req.params.id)
+            const product = await ProductEntity.findOne({ where: { uid: req.params.uid } })
             if (!product) {
                 return res.status(404).send({
                     message: 'Product not found'
