@@ -11,8 +11,9 @@ class ProductController {
                 imgURL,
                 productURL,
                 name,
-                price,
+                unitPrice,
                 targetQuantity,
+                totalPostage,
                 description
             } = req.body
 
@@ -25,8 +26,9 @@ class ProductController {
                 imgURL,
                 productURL,
                 name,
-                price,
+                unitPrice,
                 targetQuantity,
+                totalPostage,
                 description,
             })
 

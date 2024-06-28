@@ -27,7 +27,15 @@ export class ProductEntity extends BaseTemplate{
         scale: 2
     })
     @IsDecimal()
-    price: number
+    unitPrice: number
+
+    @Column({
+        type: 'decimal',
+        precision: 10,
+        scale: 2
+    })
+    @IsDecimal()
+    totalPostage: number
 
     @Column({nullable: true, default: null})
     @IsInt()
