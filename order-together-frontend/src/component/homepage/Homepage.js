@@ -1,57 +1,31 @@
 import '../main.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 export const Homepage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/product/products')
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the products!", error);
+      });
+  }, []);
 
   return (
     <div id="main" className="main">
       <div className="products">
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="./flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
-        <div className="product-card">
-          <img src="flash-drive.jpg" alt="Flash Drive"/>
-          <p className="product-name">Flash Drive</p>
-          <p className="product-price">$9.99</p>
-          <button>Join Now!</button>
-        </div>
+        {products.map((product) => (
+          <div className="product-card" key={product.id}>
+            <img src={product.imgURL} alt={product.name} />
+            <p className="product-name">{product.name}</p>
+            <p className="product-price">${product.unitPrice}</p>
+            <button>Join Now!</button>
+          </div>
+        ))}
       </div>
     </div>
   )
