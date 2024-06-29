@@ -15,10 +15,10 @@ export class ProductEntity extends BaseTemplate{
     @Column({nullable: true, default: null})
     description: string | null = null
 
-    @Column({nullable: true, default: null})
-    productURL: string | null = null
+    @Column({  nullable: true, default: null, length: 2048 })
+    productURL: string | null = null;
 
-    @Column({nullable: true, default: null})
+    @Column({  nullable: true, default: null, length: 2048  })
     imgURL: string | null = null
 
     @Column({
