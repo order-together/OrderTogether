@@ -9,35 +9,41 @@ body, html {
     box-sizing: inherit;
 }
 
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f1f1f1;
+    background-color: #d7a386;
     padding: 10px 20px;
+    img {
+        height: 50px;
+        max-width: 100px;
+    }
+
+    nav {
+        display: flex;
+        flex: 2;
+    }
+
+    nav a {
+        text-decoration: none;
+        margin-left: 50px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .right-header {
+        display: flex;
+        align-items: center;
+        flex: 2;
+    }
 }
 
 .logo {
     flex: 1;
 }
 
-nav {
-    display: flex;
-    flex: 2;
-}
-
-nav a {
-    text-decoration: none;
-    margin: 0 10px;
-    color: black;
-    font-size: 16px;
-}
-
-.right-header {
-    display: flex;
-    align-items: center;
-    flex: 2;
-}
 
 .right-header input[type="search"] {
     flex-grow: 1;
@@ -46,16 +52,27 @@ nav a {
 }
 
 .icons i {
-    margin: 0 5px;
-    font-size: 20px; 
+    margin: 0 10px;
+    font-size: 20px;
 }
 
-/* 主体产品区域样式 */
-main .products {
+
+.main .products {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; 
     padding: 20px;
+    margin-right: 100px;
+    margin-left: 100px;
+    button {
+        background-color: #b15f45;
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        width: 100px;
+        color: white;
+        font-weight: 600;
+    }
 }
 
 .product-card {
@@ -64,18 +81,20 @@ main .products {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     padding: 10px;
     text-align: center;
+    color: black;
+    font-weight: 600;
 }
 
 .product-card img {
-    width: 80%; 
+    width: 40%;
     height: auto;
 }
 
-footer {
+.footer {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #ddd;
+    padding: 10px 50px;
+    background-color: lightgrey;
 }
 
 .social-media {
@@ -84,7 +103,7 @@ footer {
 }
 
 .social-media i {
-    padding: 0 5px;
+    padding: 0 15px;
     font-size: 24px; 
 }
 
@@ -95,7 +114,8 @@ footer {
 
 .footer-nav a {
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 15px;
     color: black;
     font-size: 16px;
+    font-weight: 500;
 }

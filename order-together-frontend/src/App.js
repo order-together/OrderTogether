@@ -7,24 +7,21 @@ import { MainLayout } from './component/public/MainLayout.js'
 import { LogIn } from './component/login/LogIn.js'
 import { SignUp } from './component/login/SignUp.js'
 import { Initiate } from './component/Initiate.js'
+import { Homepage } from './component/homepage/Homepage.js'
 
 function App () {
   return (
     <BrowserRouter>
+      <MainLayout>
       <Routes>
-        {/*<Route path="/" element={<MainLayout/>}>*/}
-        {/*<Route path="/" element={<LogIn/>}></Route>*/}
-          <Route path="/" element={<LogIn/>}/>
+          <Route path="/" element={<Homepage/>}/>
           <Route path="login" element={<LogIn/>}/>
-          {/*<Route path="signup" element={<SignUp/>} />*/}
-        {/*</Route>*/}
-          {/*sijiang test*/}
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
       </Routes>
+      </MainLayout>
     </BrowserRouter>
   )
 }
-// Test
 
 export default App
