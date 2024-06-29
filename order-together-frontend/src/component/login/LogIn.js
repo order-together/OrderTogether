@@ -134,7 +134,7 @@ export const LogIn = () => {
   return (
     <Box
       sx={{
-        height: 'auto',
+        height: { xs: '934px', md: '708px' },
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -190,18 +190,17 @@ export const LogIn = () => {
           <Box>
             <Typography
               sx={{
-                mt: { xs: '220px', md: '15px' },
+                mt: { xs: '268.5px', md: '30px' },
                 width: { md: '434px' },
-                height: '30px',
-                fontFamily: 'sans-serif',
+                height: { xs: '30px  ', md: '30px' },
                 fontStyle: 'normal',
-                fontWeight: 500,
+                fontWeight: '500',
                 fontSize: '20px',
                 lineHeight: '150%',
-                color: '#0769DA'
+                fontFamily: '\'Inter\', sans-serif'
               }}
             >
-              Log in
+              Log in to Order Together
             </Typography>
 
             <Grid>
