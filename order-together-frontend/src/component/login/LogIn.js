@@ -99,13 +99,13 @@ export const LogIn = () => {
       setIsCheckingBackEnd(true)
       const response = await dispatch(loginRequest(formData.username, formData.password))
       if (response?.status !== 200) {
-          setOpenError(true)
-          setErrorMessage(response.message)
+        setOpenError(true)
+        setErrorMessage(response.message)
       } else if (response?.token) {
-          localStorage.setItem('userToken', response.token)
-          navigate('/')
+        localStorage.setItem('userToken', response.token)
+        navigate('/')
       } else {
-          console.error('Login failed: No token received')
+        console.error('Login failed: No token received')
       }
       setIsCheckingBackEnd(false)
     } catch (err) {
@@ -134,7 +134,7 @@ export const LogIn = () => {
   return (
     <Box
       sx={{
-        height: { xs: '934px', md: '708px' },
+        height: 'auto',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -190,23 +190,24 @@ export const LogIn = () => {
           <Box>
             <Typography
               sx={{
-                mt: { xs: '268.5px', md: '30px' },
+                mt: { xs: '220px', md: '15px' },
                 width: { md: '434px' },
-                height: { xs: '30px  ', md: '30px' },
+                height: '30px',
+                fontFamily: 'sans-serif',
                 fontStyle: 'normal',
-                fontWeight: '500',
+                fontWeight: 500,
                 fontSize: '20px',
                 lineHeight: '150%',
-                fontFamily: '\'Inter\', sans-serif'
+                color: '#0769DA'
               }}
             >
-              Log in to Order Together
+              Log in
             </Typography>
 
             <Grid>
               <Grid item xs={12} md={12}>
                 <Box component="form" noValidate
-                  onSubmit={handleSubmit}
+                     onSubmit={handleSubmit}
                      data-testid="login-form">
                   <Box>
                     <TextField

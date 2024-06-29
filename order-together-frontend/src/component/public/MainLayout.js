@@ -1,10 +1,9 @@
 import React from 'react'
+import { Header } from './Header.js'
+import { Footer } from './Footer.js'
 
 
 export const MainLayout = ({ children }) => {
-  // const dispatch = useDispatch()
-  // const location = useLocation()
-  // const currentRoute = location.pathname
 
   return (
     <div
@@ -14,17 +13,17 @@ export const MainLayout = ({ children }) => {
         minHeight: '100vh'
       }}
     >
-      {/*<Header/>*/}
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    flex: 1,*/}
-      {/*    overflowY: 'auto',*/}
-      {/*    margin: 0*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  {children}*/}
-      {/*</div>*/}
-      {/*{currentRoute !== '/login' && currentRoute !== '/signup' && <Footer/>}*/}
+      <Header/>
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          margin: 0
+        }}
+      >
+        {children}
+      </div>
+      <Footer/>
     </div>
   )
 }
