@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import Button from '@mui/material/Button'
@@ -76,9 +77,9 @@ export const SignUp = () => {
         message: existRes.message
       })
       if (existRes.error || existRes.existed) {
-          updateValidationResults(name, existRes.message)
+        updateValidationResults(name, existRes.message)
       } else {
-          updateValidationResults(name)
+        updateValidationResults(name)
       }
     }
   }
@@ -92,12 +93,12 @@ export const SignUp = () => {
         const existRes = await dispatch(usernameExistedCheck(formData.username))
         setIsCheckingBackEnd(false)
         if (existRes.error || existRes.existed) {
-            setValidationRes(prevState => ({
-                ...prevState,
-                isValid: false,
-                errs: {...prevState.errs, username: existRes.message}
-            }))
-            return
+          setValidationRes(prevState => ({
+            ...prevState,
+            isValid: false,
+            errs: {...prevState.errs, username: existRes.message}
+          }))
+          return
         }
       }
 
@@ -130,13 +131,13 @@ export const SignUp = () => {
   return (
     <Box
       sx={{
-        height: { xs: '934px', md: '706px' },
+        height: 'auto',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         paddingTop: 0,
         paddingBottom: 0,
-        background: 'rgba(240, 240, 240, 1)'
+        background: 'rgba(240, 240, 240, 1)',
       }}
     >
       <Box
@@ -161,7 +162,7 @@ export const SignUp = () => {
             paddingLeft: '16px !important',
             paddingRight: '16px !important',
             width: { md: '466px' },
-            height: { xs: '932px', md: '520px' }
+            height: { xs: '932px', md: '380px' }
           }}
         >
           <Box
@@ -358,7 +359,7 @@ export const SignUp = () => {
                 {isCheckingBackEnd ? <CircularWaiting size={20}/> : 'Sign Up'}
               </Button>
             </Box>
-            <Box sx={{ display: 'flex', mt: '24px', fontFamily: '\'Inter\', sans-serif' }}>
+            <Box sx={{ display: 'flex', mt: '-40px', fontFamily: '\'Inter\', sans-serif' }}>
               <Typography>Already have an account?</Typography>
               <Typography sx={{ ml: '8px' }}>
                 <Link
