@@ -1,0 +1,130 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d7a386;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    img {
+        height: 50px;
+        max-width: 100px;
+    }
+
+    nav {
+        display: flex;
+        flex: 2;
+    }
+
+    nav a {
+        text-decoration: none;
+        margin-left: 50px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .right-header {
+        display: flex;
+        align-items: center;
+        flex: 2;
+    }
+}
+
+.logo {
+    flex: 1;
+}
+
+
+.right-header input[type="search"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+.icons i {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+
+.main .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: 60px;
+    button {
+        background-color: #b15f45;
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        width: 100px;
+        color: white;
+        font-weight: 600;
+    }
+}
+
+.product-card {
+    width: calc(25% - 20px);
+    margin: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px;
+    text-align: center;
+    color: black;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+.product-card img {
+    width: 50%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: lightgrey;
+}
+
+.social-media {
+    display: flex;
+    flex: 1;
+}
+
+.social-media i {
+    padding: 0 15px;
+    font-size: 24px;
+}
+
+.footer-nav {
+    display: flex;
+    margin-left: auto;
+}
+
+.footer-nav a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+}
