@@ -71,7 +71,7 @@ body, html {
     margin-right: 100px;
     margin-left: 100px;
     margin-top: 60px;
-    button {
+    .join-button {
         background-color: #b15f45;
         border: none;
         border-radius: 5px;
@@ -79,6 +79,7 @@ body, html {
         width: 100px;
         color: white;
         font-weight: 600;
+        cursor: pointer;
     }
 }
 
