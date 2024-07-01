@@ -85,7 +85,7 @@
     margin-top: 10px;
 }
 
-button {
+.pay-button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -97,6 +97,6 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.pay-button:hover {
     background-color: #0056b3;
 }
