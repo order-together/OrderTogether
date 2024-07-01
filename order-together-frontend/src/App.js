@@ -34,7 +34,7 @@ function App () {
           <Route path="login" element={<LogIn/>}/>
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
-          <Route path="joint" element={<JointOrder/>}/>
+          <Route path="joint/:uid" element={<JointOrder/>}/>
         </Routes>
       </MainLayout>
 >>>>>>> f831ed679273405bb7951966510ee921ef4bf035
