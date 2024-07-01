@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import Button from '@mui/material/Button'
@@ -76,9 +80,15 @@ export const SignUp = () => {
         message: existRes.message
       })
       if (existRes.error || existRes.existed) {
+<<<<<<< HEAD
           updateValidationResults(name, existRes.message)
       } else {
           updateValidationResults(name)
+=======
+        updateValidationResults(name, existRes.message)
+      } else {
+        updateValidationResults(name)
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
       }
     }
   }
@@ -92,12 +102,21 @@ export const SignUp = () => {
         const existRes = await dispatch(usernameExistedCheck(formData.username))
         setIsCheckingBackEnd(false)
         if (existRes.error || existRes.existed) {
+<<<<<<< HEAD
             setValidationRes(prevState => ({
                 ...prevState,
                 isValid: false,
                 errs: {...prevState.errs, username: existRes.message}
             }))
             return
+=======
+          setValidationRes(prevState => ({
+            ...prevState,
+            isValid: false,
+            errs: {...prevState.errs, username: existRes.message}
+          }))
+          return
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
         }
       }
 
@@ -130,13 +149,21 @@ export const SignUp = () => {
   return (
     <Box
       sx={{
+<<<<<<< HEAD
         height: { xs: '934px', md: '706px' },
+=======
+        height: 'auto',
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         paddingTop: 0,
         paddingBottom: 0,
+<<<<<<< HEAD
         background: 'rgba(240, 240, 240, 1)'
+=======
+        background: 'rgba(240, 240, 240, 1)',
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
       }}
     >
       <Box
@@ -161,7 +188,11 @@ export const SignUp = () => {
             paddingLeft: '16px !important',
             paddingRight: '16px !important',
             width: { md: '466px' },
+<<<<<<< HEAD
             height: { xs: '932px', md: '520px' }
+=======
+            height: { xs: '932px', md: '380px' }
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
           }}
         >
           <Box
@@ -358,7 +389,11 @@ export const SignUp = () => {
                 {isCheckingBackEnd ? <CircularWaiting size={20}/> : 'Sign Up'}
               </Button>
             </Box>
+<<<<<<< HEAD
             <Box sx={{ display: 'flex', mt: '24px', fontFamily: '\'Inter\', sans-serif' }}>
+=======
+            <Box sx={{ display: 'flex', mt: '-40px', fontFamily: '\'Inter\', sans-serif' }}>
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
               <Typography>Already have an account?</Typography>
               <Typography sx={{ ml: '8px' }}>
                 <Link

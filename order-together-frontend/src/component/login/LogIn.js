@@ -99,6 +99,7 @@ export const LogIn = () => {
       setIsCheckingBackEnd(true)
       const response = await dispatch(loginRequest(formData.username, formData.password))
       if (response?.status !== 200) {
+<<<<<<< HEAD
           setOpenError(true)
           setErrorMessage(response.message)
       } else if (response?.token) {
@@ -106,6 +107,15 @@ export const LogIn = () => {
           navigate('/')
       } else {
           console.error('Login failed: No token received')
+=======
+        setOpenError(true)
+        setErrorMessage(response.message)
+      } else if (response?.token) {
+        localStorage.setItem('userToken', response.token)
+        navigate('/')
+      } else {
+        console.error('Login failed: No token received')
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
       }
       setIsCheckingBackEnd(false)
     } catch (err) {
@@ -134,7 +144,11 @@ export const LogIn = () => {
   return (
     <Box
       sx={{
+<<<<<<< HEAD
         height: { xs: '934px', md: '708px' },
+=======
+        height: 'auto',
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -190,6 +204,7 @@ export const LogIn = () => {
           <Box>
             <Typography
               sx={{
+<<<<<<< HEAD
                 mt: { xs: '268.5px', md: '30px' },
                 width: { md: '434px' },
                 height: { xs: '30px  ', md: '30px' },
@@ -201,12 +216,30 @@ export const LogIn = () => {
               }}
             >
               Log in to Order Together
+=======
+                mt: { xs: '220px', md: '15px' },
+                width: { md: '434px' },
+                height: '30px',
+                fontFamily: 'sans-serif',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                fontSize: '20px',
+                lineHeight: '150%',
+                color: '#0769DA'
+              }}
+            >
+              Log in
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
             </Typography>
 
             <Grid>
               <Grid item xs={12} md={12}>
                 <Box component="form" noValidate
+<<<<<<< HEAD
                   onSubmit={handleSubmit}
+=======
+                     onSubmit={handleSubmit}
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
                      data-testid="login-form">
                   <Box>
                     <TextField
@@ -446,4 +479,8 @@ export const LogIn = () => {
       </Box>
     </Box>
   )
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f831ed679273405bb7951966510ee921ef4bf035
