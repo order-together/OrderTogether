@@ -8,6 +8,7 @@ import { LogIn } from './component/login/LogIn.js'
 import { SignUp } from './component/login/SignUp.js'
 import { Initiate } from './component/Initiate.js'
 import { Homepage } from './component/homepage/Homepage.js'
+import { JointOrder } from './component/jointOrder/JointOrder.js'
 
 function App () {
   return (
@@ -18,6 +19,7 @@ function App () {
           <Route path="login" element={<LogIn/>}/>
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
+          <Route path="joint" element={<JointOrder/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>
