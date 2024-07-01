@@ -19,7 +19,7 @@ function App () {
           <Route path="login" element={<LogIn/>}/>
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
-          <Route path="joint" element={<JointOrder/>}/>
+          <Route path="joint/:uid" element={<JointOrder/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>
