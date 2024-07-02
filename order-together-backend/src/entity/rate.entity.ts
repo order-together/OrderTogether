@@ -1,33 +1,19 @@
-import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
-import {IsInt, Min, Max} from "class-validator";
-import {BaseTemplate} from "./base.entity";
-import {UserEntity} from "./user.entity";
-import {OrderEntity} from "./order.entity";
-import { relative } from "path/win32";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-
-
-@Entity('order_together_rate')
-export class RateEntity extends BaseTemplate {
-
-    @Column({nullable: true, default: null})
-    type: string | null = null
+@Entity('order_together_rating')
+export class RatingEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column()
-    @IsInt()
-    @Min(1)
-    @Max(5)
-    rate: number
+    raterUid: string;
 
-    @Column({nullable: true, default: null})
-    comment: string | null = null
+    @Column()
+    ratedUid: string;
 
-    @ManyToOne( ()=> UserEntity, user=>user.ratedRating)
-    ratedUser: UserEntity
+    @Column()
+    rating: number;
 
-    @ManyToOne( ()=> UserEntity, user=>user.raterRating)
-    raterUser: UserEntity
-
-    @ManyToOne( ()=> OrderEntity, order=>order.rate)
-    order: OrderEntity
+    @Column({ nullable: true })
+    comment: string;
 }
