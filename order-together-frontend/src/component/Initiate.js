@@ -3,55 +3,24 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
-<<<<<<< HEAD
-=======
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Dialog,DialogTitle,DialogContent,Typography,DialogActions } from '@mui/material'
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
 
 export const Initiate = () => {
   const decoded = jwtDecode(localStorage.getItem('userToken'))
   const userUId = decoded.userUId
-<<<<<<< HEAD
-  const boxStyle = { marginBottom: '30px' }
-  const textFieldStyle = {
-    '& .MuiOutlinedInput-root': {
-=======
   const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' });
   const boxStyle = { marginBottom: '30px' }
   const textFieldStyle = {
     '& .MuiOutlinedInput-root': {
       marginTop: '5px',
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
       '& .MuiInputBase-input': {
         height: '20px',
         padding: '10px',
       },
     },
   }
-<<<<<<< HEAD
-  const desTextFieldStyle = {
-    '& .MuiOutlinedInput-root': {
-      '& .MuiInputBase-input': {
-        height: '60px',
-        // padding: '5px',
-      },
-    },
-  }
-  return (
-    <Box sx={{ display: 'flex', direction: 'row', justifyContent: 'center', marginTop: '50px' }}>
-      <Box sx={{ paddingRight: '50px' }}>
-        <img style={{ width: '300px', height: '300px' }}/>
-        <Box sx={{ marginTop:'30px' }}>Original Product Link</Box>
-        <TextField
-          abel="Enter Text"
-          variant="outlined"
-          // value={value}
-          // onChange={handleChange}
-          fullWidth
-          sx={desTextFieldStyle}
-=======
 
   const imgURLTextFieldStyle = {
     '& .MuiOutlinedInput-root': {
@@ -176,7 +145,6 @@ export const Initiate = () => {
           name="productURL"
           onChange={handleChange}
           sx={productLinkTextFieldStyle}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
           multiline
         >
         </TextField>
@@ -188,35 +156,22 @@ export const Initiate = () => {
             abel="Enter Text"
             variant="outlined"
             // value={value}
-<<<<<<< HEAD
-            // onChange={handleChange}
-=======
             name="name"
             onChange={handleChange}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
             fullWidth
             sx={textFieldStyle}
           >
           </TextField>
         </Box>
-<<<<<<< HEAD
-        <Box sx={{display:'flex'}}>
-          <Box sx={{marginBottom: '30px',marginRight:'30px'}}>
-=======
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginBottom: '30px', marginRight: '30px' }}>
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
             <Box>Price Per Unit</Box>
             <TextField
               abel="Enter Text"
               variant="outlined"
               // value={value}
-<<<<<<< HEAD
-              // onChange={handleChange}
-=======
               name="unitPrice"
               onChange={handleChange}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
               fullWidth
               sx={textFieldStyle}
             >
@@ -228,12 +183,8 @@ export const Initiate = () => {
               abel="Enter Text"
               variant="outlined"
               // value={value}
-<<<<<<< HEAD
-              // onChange={handleChange}
-=======
               name="targetQuantity"
               onChange={handleChange}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
               fullWidth
               sx={textFieldStyle}
             >
@@ -246,12 +197,8 @@ export const Initiate = () => {
             abel="Enter Text"
             variant="outlined"
             // value={value}
-<<<<<<< HEAD
-            // onChange={handleChange}
-=======
             name="totalPostage"
             onChange={handleChange}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
             fullWidth
             sx={textFieldStyle}
           >
@@ -263,23 +210,14 @@ export const Initiate = () => {
             abel="Enter Text"
             variant="outlined"
             // value={value}
-<<<<<<< HEAD
-            // onChange={handleChange}
-=======
             name="description"
             onChange={handleChange}
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
             fullWidth
             sx={desTextFieldStyle}
             multiline
           >
           </TextField>
         </Box>
-<<<<<<< HEAD
-        <Box  sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save</Button>
-        </Box>
-=======
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button variant="contained" onClick={handleSubmit}>Save</Button>
         </Box>
@@ -294,7 +232,6 @@ export const Initiate = () => {
             </Button>
           </DialogActions>
         </Dialog>
->>>>>>> f831ed679273405bb7951966510ee921ef4bf035
       </Box>
     </Box>
   )
