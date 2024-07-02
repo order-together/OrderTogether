@@ -1,7 +1,7 @@
 import {Column, Entity, Unique, OneToMany, ManyToMany, JoinTable} from 'typeorm'
 import {BaseTemplate} from './base.entity'
 import {IsDecimal, IsEmail, Length, Max, Min} from 'class-validator'
-import {RateEntity} from "./rate.entity";
+import {RatingEntity} from "./rate.entity";
 import {ProductEntity} from "./product.entity";
 import {OrderEntity} from "./order.entity";
 
@@ -83,11 +83,11 @@ export class UserEntity extends BaseTemplate {
     @Column({nullable: true, default: null})
     status: string
 
-    @OneToMany(() => RateEntity, rate => rate.ratedUser)
-    ratedRating: RateEntity[]
+    @OneToMany(() => RatingEntity, rate => rate.ratedUid)
+    ratedRating: RatingEntity[]
 
-    @OneToMany(() => RateEntity, rate => rate.raterUser)
-    raterRating: RateEntity[]
+    @OneToMany(() => RatingEntity, rate => rate.raterUid)
+    raterRating: RatingEntity[]
 
     @OneToMany(() => ProductEntity, product => product.creator)
     createProducts: ProductEntity[]
@@ -98,4 +98,7 @@ export class UserEntity extends BaseTemplate {
     @ManyToMany(() => ProductEntity)
     @JoinTable()
     collectProducts: ProductEntity[]
+
+    @Column({ nullable: true, unique: true })
+    uid: string;
 }

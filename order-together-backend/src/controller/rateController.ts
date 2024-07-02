@@ -1,25 +1,41 @@
 import { Request, Response } from 'express';
 import gDB from "../initDataSource";
-import { RateEntity } from '../entity/rate.entity';
+import { RatingEntity } from '../entity/rate.entity';
+import { UserEntity } from '../entity/user.entity';
 
-const ratingRepo = gDB.getRepository(RateEntity);
+
+const ratingRepo = gDB.getRepository(RatingEntity);
+const userRepo = gDB.getRepository(UserEntity);
+
 
 class RatingController {
     // Add comment and rating
     static async addRating(request: Request, response: Response) {
-        const { rate, comment } = request.body;
+        const { raterUid, ratedUid, rating, comment } = request.body;
 
-        if (!rate) {
-            return response.status(400).send({ message: 'Rating are required.' });
+        if (!raterUid || !ratedUid || !rating) {
+            return response.status(400).send({ message: 'Rater UID, rated UID, and rating are required.' });
         }
 
         try {
             const newRating = ratingRepo.create({
-                rate,
+                raterUid,
+                ratedUid,
+                rating,
                 comment
             });
 
             await ratingRepo.save(newRating);
+
+            // Re-calculate the average rating for rated user
+            const ratedUser = await userRepo.findOne({ where: { uid: ratedUid } });
+            if (ratedUser) {
+                const ratings = await ratingRepo.find({ where: { ratedUid: ratedUid } });
+                const averageRating = ratings.reduce((acc, curr) => acc +curr.rating, 0) / ratings.length;
+                ratedUser.overallRating = parseFloat(averageRating.toFixed(2));
+                await userRepo.save(ratedUser);
+            }
+
             return response.status(201).send({ message: 'Rating added successfully.', newRating });
         } catch (e) {
             return response.status(500).send({ message: 'Error adding rating.' });
