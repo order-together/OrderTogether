@@ -1,0 +1,91 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    width: 500px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    width: 100%;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    color: black;
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    margin-bottom: 10px; /* Reduced margin */
+    font-size: 1em;
+    color: gray;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 10px; /* Reduced margin */
+    display: flex;
+    flex-direction: column;
+}
+
+.save-button {
+    display: block;
+    width: 50%; /* Reduced width */
+    padding: 12px; /* Reduced padding */
+    font-size: 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px; /* Reduced margin */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* Ensure text is centered */
+}
+
+
+.save-button:hover {
+    background-color: #0056b3;
+}
+
+.direction-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px; /* Reduced margin */
+    width: 100%;
+}
+
+.direction-button button {
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.direction-button button:hover {
+    color: #0056b3;
+}
