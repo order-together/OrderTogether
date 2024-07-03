@@ -101,4 +101,13 @@ export class UserEntity extends BaseTemplate {
 
     @Column({ nullable: true, unique: true })
     uid: string;
+
+    @Column({ nullable: true })
+    street: string | null = null;
+
+    @Column({ nullable: true })
+    city: string | null = null;
+
+    @Column({ nullable: true })
+    postcode: string | null = null;
 }

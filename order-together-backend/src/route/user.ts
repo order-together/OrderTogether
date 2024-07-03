@@ -8,4 +8,7 @@ router.get('/check-username-existence',UserController.checkUsernameExistence)
 
 router.post('/signup',UserController.signup)
 router.post('/login',UserController.login)
+
+router.put('/user/update', UserController.updateUserInfo);
+
 export default router
