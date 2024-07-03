@@ -51,9 +51,6 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    border: none;
-    background: #c8102e;
-    color: white;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -61,6 +58,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #c8102e;
 }
 
 .participants {
@@ -78,8 +79,6 @@
     right: 30px;
     top: 15px;
     border: none;
-    background: #c8102e;
-    color: white;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -87,6 +86,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-size: 18px;
+    color: #FFFFFF;
+    background-color: #c8102e;
+
 }
 
 .rating {
