@@ -111,6 +111,36 @@ class UserController {
         }
     }
 
+    static async updateUserInfo(request: Request, response: Response) {
+        const { userId, firstName, lastName, age, phone, street, city, postcode } = request.body;
+
+        if (!userId) {
+            return response.status(400).send({ message: 'User ID is required.' });
+        }
+
+        try {
+            const user = await repo.findOne({ where: { uid: userId } });
+
+            if (!user) {
+                return response.status(404).send({ message: 'User not found.' });
+            }
+
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.age = age;
+            user.phone = phone;
+            user.street = street;
+            user.city = city;
+            user.postcode = postcode;
+
+            await repo.save(user);
+
+            return response.status(200).send({ message: 'User information updated successfully.', user });
+        } catch (e) {
+            return response.status(500).send({ message: 'Error updating user information.' });
+        }
+    }
+
 }
 
 export default UserController

@@ -21,7 +21,7 @@ export class OrderEntity extends BaseTemplate {
     totalPrice: number
 
     @Column({nullable: false, default: null})
-    status: string | null = null
+    status: string | null = null // "pending", "started", "completed", "rated"
 
     @ManyToOne( ()=> UserEntity, user=>user.orders)
     user: UserEntity
