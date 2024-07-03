@@ -1,0 +1,121 @@
+.order-management {
+    width: 90%;
+    margin: 100px auto;
+    font-family: Arial, sans-serif;
+}
+
+.initiator-section, .participant-section {
+    margin-bottom: 20px;
+}
+
+.order-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.initiator-order-card {
+    flex: 1 1 48%;
+    max-width: 48%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.participant-order-card {
+    flex: 1 1 48%;
+    max-width: 48%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    .order-card-img{
+        width: 60px;
+        margin-right: 50px;
+        margin-left: 30px;
+    }
+}
+
+.delete-order {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    background: #c8102e;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.participants {
+    display: flex;
+    justify-content: center;
+}
+
+.participant {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.participant-delete{
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    border: none;
+    background: #c8102e;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.rating {
+    text-align: center;
+}
+
+.rating .star {
+    color: #ccc;
+}
+
+.rating .star.filled {
+    color: #f0d130;
+}
+
+.start-button, .complete-button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.start-button {
+    background-color: #f2a640;
+    color: white;
+}
+
+.complete-button {
+    background-color: #4caf50;
+    color: white;
+}
