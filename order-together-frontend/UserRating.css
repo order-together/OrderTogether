@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-photo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-id, .user-name {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.user-rating span:last-child {
+    margin-left: 10px;
+    font-size: 1em;
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.filter-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.filter-button.active, .filter-button:hover {
+    background-color: #ff8c00;
+    color: #fff;
+    border-color: #ff8c00;
+}
+
+.ratings-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ratings-column {
+    width: 48%;
+}
+
+.ratings-column h2 {
+    margin-top: 0;
+}
+
+.rating-card {
+    background-color: #fafafa;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.rating-card p {
+    margin: 5px 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rating-stars {
+    font-size: 1.2em;
+    color: #ff8c00;
+}
+
+.timestamp {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.reviewer {
+    font-weight: bold;
+}
+
