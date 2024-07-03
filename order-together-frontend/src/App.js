@@ -9,6 +9,7 @@ import { SignUp } from './component/login/SignUp.js'
 import { Initiate } from './component/Initiate.js'
 import { Homepage } from './component/homepage/Homepage.js'
 import { JointOrder } from './component/jointOrder/JointOrder.js'
+import { ManageOrder } from './component/manageOrder/ManageOrder.js'
 
 function App () {
   return (
@@ -20,6 +21,7 @@ function App () {
           <Route path="signup" element={<SignUp/>}/>
           <Route path="initiate" element={<Initiate/>}/>
           <Route path="joint/:uid" element={<JointOrder/>}/>
+          <Route path="manage" element={<ManageOrder/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>
