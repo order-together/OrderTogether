@@ -83,11 +83,11 @@ export class UserEntity extends BaseTemplate {
     @Column({nullable: true, default: null})
     status: string
 
-    @OneToMany(() => RatingEntity, rate => rate.ratedUid)
-    ratedRating: RatingEntity[]
+    @OneToMany(() => RatingEntity, rating => rating.ratedUser)
+    ratedRating: RatingEntity[];
 
-    @OneToMany(() => RatingEntity, rate => rate.raterUid)
-    raterRating: RatingEntity[]
+    @OneToMany(() => RatingEntity, rating => rating.raterUser)
+    raterRating: RatingEntity[];
 
     @OneToMany(() => ProductEntity, product => product.creator)
     createProducts: ProductEntity[]
