@@ -1,21 +1,49 @@
 import { Request, Response } from 'express';
-import { getAllOrders, createOrder } from '../models/Order';
+import gDB from "../initDataSource";
+import { OrderEntity } from '../entity/order.entity';
+import { UserEntity } from '../entity/user.entity';
 
-export const getOrders = async (req: Request, res: Response) => {
-  try {
-    const orders = await getAllOrders();
-    res.status(200).json(orders);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching orders' });
-  }
-};
+const orderRepo = gDB.getRepository(OrderEntity);
+const userRepo = gDB.getRepository(UserEntity);
 
-export const addOrder = async (req: Request, res: Response) => {
-  try {
-    const order = req.body;
-    await createOrder(order);
-    res.status(201).json({ message: 'Order created' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating order' });
-  }
-};
+class OrderController {
+    static async createOrder(request: Request, response: Response) {
+        const { userId, quantity, totalPrice, status } = request.body;
+
+        if (!userId || !quantity || !totalPrice || !status) {
+            return response.status(400).send({ message: 'All fields are required.' });
+        }
+
+        try {
+            const user = await userRepo.findOne({ where: { uid: userId } });
+
+            if (!user) {
+                return response.status(404).send({ message: 'User not found.' });
+            }
+
+            const newOrder = orderRepo.create({
+                user,
+                quantity,
+                totalPrice,
+                status
+            });
+
+            await orderRepo.save(newOrder);
+
+            return response.status(201).send({ message: 'Order created successfully.', newOrder });
+        } catch (e) {
+            return response.status(500).send({ message: 'Error creating order.' });
+        }
+    }
+
+    static async getAllOrders(request: Request, response: Response) {
+        try {
+            const orders = await orderRepo.find();
+            return response.status(200).send(orders);
+        } catch (e) {
+            return response.status(500).send({ message: 'Error fetching orders.' });
+        }
+    }
+}
+
+export default OrderController;

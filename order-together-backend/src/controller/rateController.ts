@@ -41,6 +41,15 @@ class RatingController {
             return response.status(500).send({ message: 'Error adding rating.' });
         }
     }
+
+    static async getRatings(request: Request, response: Response) {
+        try {
+            const ratings = await ratingRepo.find();
+            return response.status(200).send(ratings);
+        } catch (e) {
+            return response.status(500).send({ message: 'Error fetching ratings.' });
+        }
+    }
 }
 
 export default RatingController;
