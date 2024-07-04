@@ -5,12 +5,11 @@ import { Avatar } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import styled from 'styled-components';
+import { deepOrange } from '@mui/material/colors';
 
 export const ManageOrder = () => {
   const [initiators, setInitiators] = useState([]);
   const userUid = '30cedd086b1'
-
-
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -19,9 +18,10 @@ export const ManageOrder = () => {
         const formattedData = response.data.map(data => ({
           orderUid: data.productId,
           name: data.productName,
-          participants: data.orders.map(user => ({
-            username: user.username,
-            rating: user.overallRating
+          participants: data.orders.map(order => ({
+            username: order.username,
+            quantity:order.quantity,
+            rating: order.overallRating
           }))
         }));
         setInitiators(formattedData);
@@ -282,8 +282,8 @@ export const ManageOrder = () => {
               <div className="participants">
                 {order.participants.map((participant, index) => (
                   <div key={index} className="participant">
-                    <span>{participant.username}</span>
-                    <Avatar className="participant-avatar">{participant.username[0]} </Avatar>
+                    <span>{`${participant.username}: ${participant.quantity}`}</span>
+                    <Avatar className="participant-avatar" sx={{ bgcolor: '#b15f45'}}>{participant.username[0]} </Avatar>
                     <button className="participant-delete">×</button>
                     <div className="rating">
                       {Array.from({ length: 5 }, (_, i) => (
