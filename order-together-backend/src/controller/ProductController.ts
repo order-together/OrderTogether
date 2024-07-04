@@ -2,6 +2,7 @@ import {ProductEntity} from "../entity/product.entity";
 import {Request, Response} from "express";
 import {uid} from "uid";
 import {UserEntity} from "../entity/user.entity";
+import {OrderEntity} from "../entity/order.entity";
 
 class ProductController {
     static createProduct = async (req: Request, res: Response) => {
@@ -13,6 +14,7 @@ class ProductController {
                 name,
                 unitPrice,
                 targetQuantity,
+                ownQuantity,
                 totalPostage,
                 description
             } = req.body
@@ -28,6 +30,7 @@ class ProductController {
                 name,
                 unitPrice,
                 targetQuantity,
+                currentQuantity:ownQuantity,
                 totalPostage,
                 description,
             })
@@ -51,7 +54,11 @@ class ProductController {
     // Get all products.
     static getProducts = async (req: Request, res: Response) => {
         try {
-            const products = await ProductEntity.find()
+            const products = await ProductEntity.find({
+                order: {
+                    createdAt: 'DESC',
+                },
+            })
             return res.status(200).send(products)
         } catch (e) {
             console.log(e)
@@ -134,7 +141,7 @@ class ProductController {
     }
 
     //update current quantity
-    static updateProductCurrentQuantity = async (req: Request, res: Response) => {
+    static makePayment = async (req: Request, res: Response) => {
         try {
             const product = await ProductEntity.findOne({where: {uid: req.params.uid}})
             if (!product) {
@@ -143,11 +150,34 @@ class ProductController {
                 })
             }
 
-            product.currentQuantity = product.currentQuantity + 1
+            const {
+                joinQuantity,
+                totalPrice,
+                userUid
+            } = req.body
+
+            product.currentQuantity = product.currentQuantity + Number(joinQuantity)
 
             const updatedProduct = await product.save()
 
-            return res.status(200).send(updatedProduct)
+            const userId = await UserEntity.findOne({
+                where: {uid: userUid}
+            })
+
+            const newOrder = OrderEntity.create({
+                user:userId,
+                quantity:joinQuantity,
+                totalPrice,
+                product:product
+            })
+
+            newOrder.uid = uid()
+
+
+            await newOrder.save()
+
+
+            return res.status(200).send(newOrder)
         } catch (e) {
             console.log(e)
             return res.status(500).send({
