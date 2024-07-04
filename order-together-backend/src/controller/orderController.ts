@@ -69,6 +69,7 @@ export class orderController {
                 }
                 groupedOrders[productUid].orders.push({
                     orderId: order.id,
+                    quantity:order.quantity,
                     username: order.user.username,
                     overallRating: order.user.overallRating
                 });
