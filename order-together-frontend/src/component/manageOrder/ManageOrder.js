@@ -7,6 +7,32 @@ import CloseIcon from '@mui/icons-material/Close'
 import styled from 'styled-components';
 
 export const ManageOrder = () => {
+  const [initiators, setInitiators] = useState([]);
+  const userUid = '30cedd086b1'
+
+
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/order/getInitiatorOrders?userUid=${userUid}`);
+        const formattedData = response.data.map(data => ({
+          orderUid: data.productId,
+          name: data.productName,
+          participants: data.orders.map(user => ({
+            username: user.username,
+            rating: user.overallRating
+          }))
+        }));
+        setInitiators(formattedData);
+        console.log(`initiators==>${initiators}`)
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchOrders();
+  }, []);
+
   const fakeData = {
     initiators: [
       {
@@ -249,10 +275,10 @@ export const ManageOrder = () => {
       <section className="initiator-section">
         <h2>Initiator Orders</h2>
         <div className="order-row">
-          {orderData.initiators.map((order) => (
-            <div className="initiator-order-card" key={order.id}>
+          {initiators.map((order) => (
+            <div className="initiator-order-card" key={order.orderUid}>
               <button className="delete-order" onClick={() => removeOrder('initiators', order.id)}>×</button>
-              <div className="order-header">#{order.id} - {order.name}</div>
+              <div className="order-header">#{order.orderUid} - {order.name}</div>
               <div className="participants">
                 {order.participants.map((participant, index) => (
                   <div key={index} className="participant">

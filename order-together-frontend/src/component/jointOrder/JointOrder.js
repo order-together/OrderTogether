@@ -4,24 +4,53 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
 
 export const JointOrder = () => {
 
   const [product, setProduct] = useState({})
-  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' });
+  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
+  const [joinQuantity, setJoinQuantity] = useState(0)
   const { uid } = useParams()
+  const [error, setError] = useState('')
+  const userUid = "30cedd086b1"
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    if (Number(value) > product.remainingQuantity) {
+      setError(`Value cannot be greater than ${product.remainingQuantity}`)
+      return
+    }
+
+    setError('')
+    setJoinQuantity(Number(value))
+
+    const postageShare = (product.totalPostage * Number(value) / product.targetQuantity).toFixed(2)
+    setProduct(prevProduct => ({
+      ...prevProduct,
+      postageShare: postageShare,
+      jointOrderTotal: (Number(product.unitPrice) + Number(postageShare)).toFixed(2)
+    }))
+  }
 
   const handleClose = () => {
-    setFeedback({ ...feedback, open: false });
-  };
+    setFeedback({ ...feedback, open: false })
+  }
 
-  const handleClickPay = () =>{
-    axios.put(`http://localhost:8000/product/productsUpdateCurrentQuantity/${uid}`)
+  const handleClickPay = () => {
+    axios.put(`http://localhost:8000/product/makePayment/${uid}`,
+      {
+        joinQuantity,
+        totalPrice: product.jointOrderTotal,
+        userUid
+      }
+    )
       .then(response => {
-        setFeedback({ open: true, message: 'Thank you for your payment!', severity: 'success' });
+        setFeedback({ open: true, message: 'Thank you for your payment!', severity: 'success' })
       })
       .catch(error => {
-        setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' });
+        setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' })
       })
   }
 
@@ -57,6 +86,20 @@ export const JointOrder = () => {
         <div className="product-details-middle">
           <div className="product-details-middle-left">
             <p><span>${product.unitPrice} </span> / unit</p>
+            <Box sx={{ marginBottom: '30px' }}>
+              <Box>Join Quantity</Box>
+              <TextField
+                abel="Enter Text"
+                variant="outlined"
+                defaultValue="1"
+                name="joinQuantity"
+                onChange={handleChange}
+                fullWidth
+                // sx={textFieldStyle}
+              >
+              </TextField>
+            </Box>
+            {error && <div style={{ color: 'red' }}>{error}</div>}
           </div>
           <div className="product-details-middle-right">
             <p>Postage After Share: <span>${product.postageShare} </span></p>
