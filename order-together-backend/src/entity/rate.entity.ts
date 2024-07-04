@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity('order_together_rating')
 export class RatingEntity {
@@ -16,4 +17,10 @@ export class RatingEntity {
 
     @Column({ nullable: true })
     comment: string;
+
+    @ManyToOne(() => UserEntity, user => user.ratedRating)
+    ratedUser: UserEntity;
+
+    @ManyToOne(() => UserEntity, user => user.raterRating)
+    raterUser: UserEntity;
 }
