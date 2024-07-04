@@ -20,7 +20,7 @@ export class OrderEntity extends BaseTemplate {
     @IsDecimal()
     totalPrice: number
 
-    @Column({nullable: false, default: null})
+    @Column({nullable: true, default: null})
     status: string | null = null // "pending", "started", "completed", "rated"
 
     @ManyToOne( ()=> UserEntity, user=>user.orders)

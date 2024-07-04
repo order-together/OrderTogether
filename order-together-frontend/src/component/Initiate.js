@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -12,6 +12,7 @@ export const Initiate = () => {
   const userUId = decoded.userUId
   const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' });
   const boxStyle = { marginBottom: '30px' }
+  const navigate = useNavigate()
   const textFieldStyle = {
     '& .MuiOutlinedInput-root': {
       marginTop: '5px',
@@ -71,6 +72,7 @@ export const Initiate = () => {
 
   const handleClose = () => {
     setFeedback({ ...feedback, open: false });
+    navigate('/')
   };
 
   const handleSubmit = () => {
@@ -100,7 +102,7 @@ export const Initiate = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', direction: 'row', justifyContent: 'center', marginTop: '50px' }}>
+    <Box sx={{ display: 'flex', direction: 'row', justifyContent: 'center', marginTop: '100px' }}>
       <Box sx={{ paddingRight: '50px', width: '350px' }}>
         <Box
           sx={{ paddingRight: '50px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
@@ -149,7 +151,7 @@ export const Initiate = () => {
         >
         </TextField>
       </Box>
-      <Box>
+      <Box sx={{marginLeft:'50px'}}>
         <Box sx={boxStyle}>
           <Box>Product Name</Box>
           <TextField
@@ -184,6 +186,19 @@ export const Initiate = () => {
               variant="outlined"
               // value={value}
               name="targetQuantity"
+              onChange={handleChange}
+              fullWidth
+              sx={textFieldStyle}
+            >
+            </TextField>
+          </Box>
+          <Box sx={{ marginBottom: '30px',marginLeft:'30px' }}>
+            <Box>Own Quantity</Box>
+            <TextField
+              abel="Enter Text"
+              variant="outlined"
+              // value={value}
+              name="ownQuantity"
               onChange={handleChange}
               fullWidth
               sx={textFieldStyle}
