@@ -10,6 +10,8 @@ import { Initiate } from './component/Initiate.js'
 import { Homepage } from './component/homepage/Homepage.js'
 import { JointOrder } from './component/jointOrder/JointOrder.js'
 import { ManageOrder } from './component/manageOrder/ManageOrder.js'
+import { Rating } from './component/userInfo/Rating.js'
+import { UserInfo } from './component/userInfo/UserInfo.js'
 
 function App () {
   return (
@@ -22,6 +24,8 @@ function App () {
           <Route path="initiate" element={<Initiate/>}/>
           <Route path="joint/:uid" element={<JointOrder/>}/>
           <Route path="manage" element={<ManageOrder/>}/>
+          <Route path="rating" element={<Rating/>}/>
+          <Route path="userInfo" element={<UserInfo/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>

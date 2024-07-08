@@ -138,6 +138,8 @@ export const SignUp = () => {
         paddingTop: 0,
         paddingBottom: 0,
         background: 'rgba(240, 240, 240, 1)',
+        width:'100vw',
+        // marginTop:'10%'
       }}
     >
       <Box
@@ -162,7 +164,7 @@ export const SignUp = () => {
             paddingLeft: '16px !important',
             paddingRight: '16px !important',
             width: { md: '466px' },
-            height: { xs: '932px', md: '380px' }
+            height: { xs: '932px', md: '420px' }
           }}
         >
           <Box

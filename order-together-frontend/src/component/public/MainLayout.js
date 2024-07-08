@@ -18,7 +18,8 @@ export const MainLayout = ({ children }) => {
         style={{
           flex: 1,
           overflowY: 'auto',
-          margin: 0
+          margin: 0,
+          marginTop:'60px'
         }}
       >
         {children}

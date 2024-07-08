@@ -5,12 +5,13 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Dialog,DialogTitle,DialogContent,Typography,DialogActions } from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, Typography, DialogActions } from '@mui/material'
+import { date } from 'yup'
 
 export const Initiate = () => {
   const decoded = jwtDecode(localStorage.getItem('userToken'))
   const userUId = decoded.userUId
-  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' });
+  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
   const boxStyle = { marginBottom: '30px' }
   const navigate = useNavigate()
   const textFieldStyle = {
@@ -40,7 +41,7 @@ export const Initiate = () => {
       height: '180px',
       overflow: 'auto',
       '& .MuiInputBase-input': {
-        width: '320px',
+        // width: '320px',
         height: '180px',
 
       },
@@ -59,7 +60,7 @@ export const Initiate = () => {
   }
 
   const [formData, setFormData] = useState({
-    creator: '30cedd086b1',
+    creator: userUId,
   })
 
   const handleChange = (event) => {
@@ -71,18 +72,37 @@ export const Initiate = () => {
   }
 
   const handleClose = () => {
-    setFeedback({ ...feedback, open: false });
-    navigate('/')
-  };
-
-  const handleSubmit = () => {
-    axios.post('http://localhost:8000/product/initiate', formData)
-      .then(response => {
-        setFeedback({ open: true, message: 'Success: Product initiated successfully!', severity: 'success' });
-      })
-      .catch(error => {
-        setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' });
-      })
+    if (feedback.severity === 'success') {
+      setFeedback({ ...feedback, open: false })
+      navigate('/')
+    } else {
+      setFeedback({ ...feedback, open: false })
+    }
+  }
+  const handleSubmit = async () => {
+    try {
+      const imageUrl = formData.imgURL
+      console.log(`formData==>${JSON.stringify(formData)}`)
+      console.log(`imageUrl==>${imageUrl}`)
+      const safetyResponse = await axios.post('http://localhost:8000/product/safeDetect', { imageUrl })
+      console.log(`safetyResponse==>${JSON.stringify(safetyResponse)}`)
+      if (safetyResponse.data.message === 'Safe') {
+        const postResponse = await axios.post('http://localhost:8000/product/initiate', formData)
+        setFeedback({ open: true, message: 'Product initiated successfully!', severity: 'success' })
+      } else {
+        const safetyMessage =
+        `Sorry, the image safe detect was not passed\n`+ `\n`+`The results of the detect are listed below:\n`+
+        `adult: ${safetyResponse.data.details['adult']}\n`+
+        `spoof: ${safetyResponse.data.details['spoof']}\n`+
+        `medical: ${safetyResponse.data.details['medical']}\n`+
+        `violence: ${safetyResponse.data.details['violence']}\n`+
+        `racy: ${safetyResponse.data.details['racy']}\n`+`\n`+
+        `Please replace the image or contact us at xxxxxxxx@xxx.com`
+        setFeedback({ open: true, message: safetyMessage, severity: 'error' })
+      }
+    } catch (error) {
+      setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' })
+    }
   }
 
   const [imageUrl, setImageUrl] = useState('')
@@ -102,7 +122,7 @@ export const Initiate = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', direction: 'row', justifyContent: 'center', marginTop: '100px' }}>
+    <Box sx={{ display: 'flex', direction: 'row', justifyContent: 'center', marginTop: '60px',width:'100vw' }}>
       <Box sx={{ paddingRight: '50px', width: '350px' }}>
         <Box
           sx={{ paddingRight: '50px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
@@ -151,7 +171,7 @@ export const Initiate = () => {
         >
         </TextField>
       </Box>
-      <Box sx={{marginLeft:'50px'}}>
+      <Box sx={{ marginLeft: '50px' }}>
         <Box sx={boxStyle}>
           <Box>Product Name</Box>
           <TextField
@@ -192,7 +212,7 @@ export const Initiate = () => {
             >
             </TextField>
           </Box>
-          <Box sx={{ marginBottom: '30px',marginLeft:'30px' }}>
+          <Box sx={{ marginBottom: '30px', marginLeft: '30px' }}>
             <Box>Own Quantity</Box>
             <TextField
               abel="Enter Text"
@@ -239,7 +259,7 @@ export const Initiate = () => {
         <Dialog open={feedback.open} onClose={handleClose}>
           <DialogTitle>{feedback.severity === 'success' ? 'Success' : 'Error'}</DialogTitle>
           <DialogContent>
-            <Typography>{feedback.message}</Typography>
+            <Typography sx={{whiteSpace:'pre'}}>{feedback.message}</Typography>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">

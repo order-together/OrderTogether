@@ -9,9 +9,9 @@ export const composedAPIs = {
 }
 export const axios = http.create({baseURL: composedAPIs.baseURL})
 export const VALIDATION_MESSAGES = {
-  emailRequired: 'Email is required',
-  emailEnter: 'Enter your email',
-  emailValid: 'Enter a valid email',
+  usernameRequired: 'Username is required',
+  usernameEnter: 'Enter your username',
+  usernameValid: 'Enter a valid username',
   passwordEnter: 'Enter your password',
   passwordMin: 'Password should be of minimum 8 characters length',
   passwordRequired: 'Password is required'
