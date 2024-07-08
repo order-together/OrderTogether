@@ -7,7 +7,7 @@ body, html {
 }
 
 *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 .header {
@@ -70,7 +70,6 @@ body, html {
     padding: 20px;
     margin-right: 100px;
     margin-left: 100px;
-    margin-top: 60px;
     .join-button {
         background-color: #b15f45;
         border: none;
@@ -92,6 +91,7 @@ body, html {
     color: black;
     font-weight: 600;
     overflow: hidden;
+    background-color: #f9f9f9;
 }
 
 .product-card img {
@@ -128,4 +128,8 @@ body, html {
     color: black;
     font-size: 16px;
     font-weight: 500;
+}
+
+.fas:hover {
+    cursor: pointer;
 }

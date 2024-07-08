@@ -27,7 +27,7 @@ class UserController {
                 })
             }
         } catch (e) {
-            return response.status(500).send({message: 'Error during checking email existence in the database.'})
+            return response.status(500).send({message: 'Error during checking username existence in the database.'})
         }
     }
     static async signup(request: Request, response: Response) {
@@ -64,7 +64,7 @@ class UserController {
     static async login(request: Request, response: Response) {
         const {username, password} = request.body
 
-        // Check if email and password are provided
+        // Check if username and password are provided
         if (!username || !password) {
             return response.status(404).send({message: 'Bad Request'})
         }
@@ -96,7 +96,7 @@ class UserController {
                     {
                         userUId: user.uid,
                         username: user.username,
-                        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 2
+                        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24
                     },
                     process.env.JWT_SECRET
                 )

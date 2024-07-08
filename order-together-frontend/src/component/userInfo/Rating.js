@@ -1,13 +1,15 @@
 import React from 'react';
 import './UserRating.css';
-//import userIcon from './user-icon.png';
+import { Avatar } from '@mui/material'
 
-export const UserRatings = () => {
+
+export const Rating = () => {
   return (
     <div className="container">
       <div className="user-info">
         <div className="user-photo">
-          <img src={userIcon} alt="User Photo" />
+          <Avatar className="participant-avatar"
+                  sx={{ bgcolor: '#b15f45', marginLeft: '30px' }}>Q</Avatar>
         </div>
         <div className="user-details">
           <p className="user-id">12306</p>

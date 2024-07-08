@@ -1,6 +1,8 @@
 import '../main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useEffect } from 'react'
 export const Footer = () => {
+
 
   return (
     <div id="footer" className="footer">

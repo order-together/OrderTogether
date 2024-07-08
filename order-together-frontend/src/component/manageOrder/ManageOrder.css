@@ -1,7 +1,15 @@
+*{
+    color: #333333;
+}
+
 .order-management {
     width: 90%;
-    margin: 100px auto;
+    margin: 0 auto;
     font-family: Arial, sans-serif;
+}
+.order-header{
+
+    font-weight: 600;
 }
 
 .initiator-section, .participant-section {
@@ -16,7 +24,7 @@
 
 .initiator-order-card {
     flex: 1 1 48%;
-    max-width: 48%;
+    width: 48%;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -29,9 +37,52 @@
     margin: 10px;
 }
 
+.initiator-order-card-bottom{
+    display: flex;
+    flex-direction: row;
+    .initiator-order-card-bottom-left{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .remain-quantity{
+
+        display:flex;
+        justify-content: left;
+        .remain-quantity-quantity{
+            color: #888888;
+            font-weight: 600;
+        }
+    }
+    .remain-quantity-content{
+        color: #f2a640;
+        font-weight: 600;
+        margin-left: 13px;
+    }
+    .initiator-order-card-bottom-status{
+        display:flex;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+
+}
+.order-card-status-status{
+    color: #888888;
+    font-weight: 600;
+    margin-right: 5px;
+    /*margin-left: -40px;*/
+}
+.order-card-status-content{
+    color: #f2a640;
+    font-weight: 600;
+    /*margin-left: 10px;*/
+}
 .participant-order-card {
     flex: 1 1 48%;
-    max-width: 48%;
+    width: 48%;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -67,17 +118,30 @@
 .participants {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }
-
+.order-info{
+    font-weight: 600;
+}
 .participant {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
     position: relative;
+    margin: 10px;
+    span {
+        margin-bottom: 5px;
+        .participant-title-right{
+            font-weight: 600;
+            margin-left: 5px;
+        }
+    }
 }
 .participant-delete{
     position: absolute;
-    right: 30px;
-    top: 15px;
+    right: 15px;
+    top: 20px;
     border: none;
     width: 20px;
     height: 20px;
@@ -111,14 +175,19 @@
     cursor: pointer;
     font-size: 14px;
     margin-top: 10px;
+    font-weight: 600;
+    color: white;
+    position: absolute;
+    right:40px;
+    bottom: 10px;
+    font-weight: 600;
 }
 
-.start-button {
-    background-color: #f2a640;
-    color: white;
+.order-card-right{
+    display: flex;
+    flex-direction: column;
 }
 
-.complete-button {
-    background-color: #4caf50;
-    color: white;
+.participant-order-card-details{
+    margin-top: 5px;
 }

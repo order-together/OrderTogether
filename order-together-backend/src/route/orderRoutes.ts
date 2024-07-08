@@ -14,4 +14,7 @@ router.get('/orders', orderController.getAllOrders);
 
 
 router.get('/getInitiatorOrders', userAccess,orderController.getInitiatorOrders);
+router.get('/getParticipantOrders',userAccess,orderController.getParticipantOrders)
+router.put('/updateOrderStatus/:uid',orderController.updateOrderStatus)
+router.delete('/deleteOrder/:uid',orderController.DeleteOrder)
 export default router;

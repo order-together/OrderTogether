@@ -141,7 +141,9 @@ export const LogIn = () => {
         paddingTop: 0,
         paddingBottom: 0,
         color: '#0769DA',
-        background: 'rgba(240, 240, 240, 1)'
+        background: 'rgba(240, 240, 240, 1)',
+        width:'100vw',
+        // marginTop:'10%'
       }}
     >
       <Box
@@ -167,7 +169,7 @@ export const LogIn = () => {
             fontFamily: '\'Inter\', sans-serif !important',
             margin: '0',
             width: { md: '466px' },
-            height: { xs: '932px', md: '520px' }
+            height: { xs: '932px', md: '420px' }
           }}
         >
           <Box
@@ -405,7 +407,7 @@ export const LogIn = () => {
                       </Typography>
                     </Box>
                     <Grid item xs={12} md={6}>
-                      <Box sx={{ textAlign: 'left', display: 'flex' }}>
+                      <Box sx={{ textAlign: 'left',mt: '-20px', display: 'flex' }}>
                         <Typography
                           sx={{
                             mt: 2,

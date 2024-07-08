@@ -2,19 +2,20 @@ import './JointOrder.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
+import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+import { jwtDecode } from 'jwt-decode'
 
 export const JointOrder = () => {
-
   const [product, setProduct] = useState({})
   const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
   const [joinQuantity, setJoinQuantity] = useState(0)
   const { uid } = useParams()
   const [error, setError] = useState('')
-  const userUid = "30cedd086b1"
+  const decoded = jwtDecode(localStorage.getItem('userToken'))
+  const userUid = decoded.userUId
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -34,8 +35,19 @@ export const JointOrder = () => {
     }))
   }
 
+  const getProduct = () => {
+    axios.get(`http://localhost:8000/product/products/${uid}`)
+      .then(response => {
+        setProduct(response.data)
+      })
+      .catch(error => {
+        console.error('There was an error fetching the products!', error)
+      })
+  }
+
   const handleClose = () => {
     setFeedback({ ...feedback, open: false })
+    getProduct()
   }
 
   const handleClickPay = () => {
@@ -55,13 +67,7 @@ export const JointOrder = () => {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/product/products/${uid}`)
-      .then(response => {
-        setProduct(response.data)
-      })
-      .catch(error => {
-        console.error('There was an error fetching the products!', error)
-      })
+    getProduct()
   }, [])
 
   return (
@@ -78,9 +84,13 @@ export const JointOrder = () => {
             <h1>{product.name}</h1>
             <p>Remaining Quantity Needed: {product.remainingQuantity}</p>
           </div>
-          <div className="product-rating">
-            {Array.from({ length: product.rating }, () => '⭐').join('')}
-            <p>{product.initiator}</p>
+          <div className="product-rating rating">
+            <Avatar className="participant-avatar"
+                    sx={{ bgcolor: '#b15f45', marginLeft: '30px' }}>{product.initiator && product.initiator[0]} </Avatar>
+            {Array.from({ length: 5 }, (_, i) => (
+              <span key={i} className={i < product.rating ? 'star filled' : 'star'}>★</span>
+            ))}
+            <p style={{ marginTop: '0px' }}>Initiator:&nbsp;&nbsp;{product.initiator}</p>
           </div>
         </div>
         <div className="product-details-middle">

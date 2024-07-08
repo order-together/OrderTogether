@@ -1,11 +1,16 @@
 
 import '../main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useNavigate } from 'react-router-dom'
 export const Header = () => {
+  const navigate = useNavigate()
+  const handleClickNavUser = () =>{
+    navigate('/userInfo')
+  }
 
   return (
     <div id="header" className="header">
-      <img className="logo" src="logo.png" alt=""/>
+      <img className="logo" src="/logo.png" alt=""/>
       <nav>
         <a href="http://localhost:3000/">PRODUCT</a>
         <a href="http://localhost:3000/manage">ORDERS</a>
@@ -15,7 +20,7 @@ export const Header = () => {
         <input type="search" placeholder="What are you looking for?"/>
         <div className="icons">
           <i className="fas fa-shopping-cart"></i>
-          <i className="fas fa-user"></i>
+          <i className="fas fa-user" onClick={handleClickNavUser}></i>
         </div>
       </div>
     </div>
