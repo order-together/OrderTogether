@@ -204,7 +204,6 @@ export const SignUp = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 id="username"
                 label="Username"
                 name="username"
@@ -221,6 +220,7 @@ export const SignUp = () => {
                   '.MuiOutlinedInput-root': {
                     bgcolor: '#F9FAFB',
                     borderRadius: '8px',
+                    width:'400px',
                     '&:hover fieldset': {
                       borderColor: '#0769DA'
                     },
@@ -249,7 +249,6 @@ export const SignUp = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 name="password"
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
@@ -275,6 +274,7 @@ export const SignUp = () => {
                   '.MuiOutlinedInput-root': {
                     bgcolor: '#F9FAFB',
                     borderRadius: '8px',
+                    width:'400px',
                     '&:hover fieldset': {
                       borderColor: '#0769DA'
                     },
@@ -329,7 +329,7 @@ export const SignUp = () => {
             </Box>
             <Box
               sx={{
-                width: { md: '434px' },
+                width: { md: '400px' },
                 height: '135px',
                 mt: '24px'
               }}

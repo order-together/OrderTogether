@@ -82,10 +82,7 @@ export const Initiate = () => {
   const handleSubmit = async () => {
     try {
       const imageUrl = formData.imgURL
-      console.log(`formData==>${JSON.stringify(formData)}`)
-      console.log(`imageUrl==>${imageUrl}`)
       const safetyResponse = await axios.post('http://localhost:8000/product/safeDetect', { imageUrl })
-      console.log(`safetyResponse==>${JSON.stringify(safetyResponse)}`)
       if (safetyResponse.data.message === 'Safe') {
         const postResponse = await axios.post('http://localhost:8000/product/initiate', formData)
         setFeedback({ open: true, message: 'Product initiated successfully!', severity: 'success' })

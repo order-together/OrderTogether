@@ -231,6 +231,7 @@ export const LogIn = () => {
                         '.MuiOutlinedInput-root': {
                           bgcolor: '#F9FAFB',
                           borderRadius: '8px',
+                          width:'400px',
                           '& fieldset': {
                             borderColor: '#6B7280'
                           },
@@ -295,6 +296,7 @@ export const LogIn = () => {
                         '& .MuiOutlinedInput-root': {
                           bgcolor: '#F9FAFB',
                           borderRadius: '8px',
+                          width:'400px',
                           '& fieldset': {
                             borderColor: '#6B7280',
                             fontFamily: "'Inter', sans-serif'",
@@ -365,7 +367,7 @@ export const LogIn = () => {
 
                   <Box
                     sx={{
-                      width: { md: '434px' },
+                      width: { md: '400px' },
                       height: '233px'
                     }}
                   >

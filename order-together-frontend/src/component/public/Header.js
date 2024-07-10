@@ -2,10 +2,11 @@
 import '../main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 export const Header = () => {
   const navigate = useNavigate()
   const handleClickNavUser = () =>{
-    navigate('/userInfo')
+      navigate('/userInfo')
   }
 
   return (
