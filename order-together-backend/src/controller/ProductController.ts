@@ -86,13 +86,14 @@ class ProductController {
                 .where("product.id = :productId", { productId: product.id })
                 .getOne();
             const initiator = user.username
+            const initiatorUid = user.uid
             const rating = user.overallRating
 
             const remainingQuantity = product.targetQuantity - product.currentQuantity;
             const postageShare = parseFloat((product.totalPostage / product.targetQuantity).toFixed(2));
             const jointOrderTotal = (Number(product.unitPrice) + Number(postageShare)).toFixed(2);
 
-            const newProduct = {...product, remainingQuantity,postageShare,jointOrderTotal,initiator,rating};
+            const newProduct = {...product, remainingQuantity,postageShare,jointOrderTotal,initiatorUid,initiator,rating};
 
             return res.status(200).send(newProduct)
         } catch (e) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './styles.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
@@ -15,8 +15,20 @@ export const UserInfo = () => {
   const [formData, setFormData] = useState({
     userId: userUId,
   })
+  const [userInfo, setUserInfo] = useState('')
+
+
+  const getUserInfo = () => {
+    axios.get(`http://localhost:8000/user/userInfo/${userUId}`)
+      .then(response => {
+        setUserInfo(response.data)
+      })
+      .catch(error => {
+        console.error('There was an error fetching the user!', error)
+      })
+  }
   const handleClickNav = () => {
-    navigate('/rating')
+    navigate(`/rating/${userUId}`)
   }
 
   const handleChange = (event) => {
@@ -28,7 +40,7 @@ export const UserInfo = () => {
   }
 
   const handleLogout = ()=>{
-    localStorage.setItem('userToken',null)
+    localStorage.setItem('userToken','')
     navigate('/login')
   }
 
@@ -47,6 +59,10 @@ export const UserInfo = () => {
     setFeedback({ ...feedback, open: false })
   }
 
+  useEffect(() => {
+    getUserInfo()
+  }, [])
+
   return (
     <div class="form-container">
       <LogoutIcon
@@ -56,30 +72,30 @@ export const UserInfo = () => {
       <form>
         <div class="form-group">
           <label for="first-name" class="label">Name</label>
-          <input type="text" id="first-name" placeholder="First Name *" class="input-field" name="firstName"
+          <input type="text" id="first-name" placeholder={userInfo.firstName ? userInfo.firstName : "First Name *" } class="input-field" name="firstName"
                  onChange={handleChange}/>
-          <input type="text" id="last-name" placeholder="Last Name *" class="input-field" name="lastName"
+          <input type="text" id="last-name" placeholder={userInfo.lastName ? userInfo.lastName : "Last Name *" } class="input-field" name="lastName"
                  onChange={handleChange}/>
         </div>
         <div class="form-group">
           <label for="age" class="label">Age</label>
-          <input type="text" id="age" placeholder="Age number *" class="input-field" name="age"
+          <input type="text" id="age" placeholder={userInfo.age ? userInfo.age : "Age number *" }  class="input-field" name="age"
                  onChange={handleChange}/>
         </div>
         <div class="form-group">
           <label for="phone" class="label">Phone</label>
-          <input type="text" id="phone" placeholder="Phone Number *" class="input-field" name="phone"
+          <input type="text" id="phone" placeholder={userInfo.phone ? userInfo.phone : "Phone Number *" }  class="input-field" name="phone"
                  onChange={handleChange}/>
         </div>
         <div class="form-group">
           <label for="address" class="label">Address</label>
-          <input type="text" id="street" placeholder="Street *" class="input-field" name="street"
+          <input type="text" id="street" placeholder={userInfo.street ? userInfo.street : "Street *" }  class="input-field" name="street"
                  onChange={handleChange}/>
-          <input type="text" id="city" placeholder="City *" class="input-field" name="city" onChange={handleChange}/>
+          <input type="text" id="city" placeholder={userInfo.city ? userInfo.city : "City *" }  class="input-field" name="city" onChange={handleChange}/>
         </div>
         <div class="form-group">
           <label for="postal-code" class="label">Postal Code</label>
-          <input type="text" id="postal-code" placeholder="Postal Code *" class="input-field" name="postcode"
+          <input type="text" id="postal-code" placeholder={userInfo.postcode ? userInfo.postcode : "Postal Code *" }  class="input-field" name="postcode"
                  onChange={handleChange}/>
         </div>
         <button  class="save-button" type="button"

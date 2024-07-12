@@ -35,6 +35,7 @@
 .user-id, .user-name {
     margin: 0;
     font-size: 1.2em;
+    font-weight: 600;
 }
 
 .user-rating {
@@ -106,6 +107,14 @@
 
 .rating-stars {
     font-size: 1.2em;
+    color: #ff8c00;
+}
+
+.star {
+    color: #ccc;
+}
+
+.star.filled {
     color: #ff8c00;
 }
 

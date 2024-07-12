@@ -1,16 +1,33 @@
 import './ManageOrder.css'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { Avatar } from '@mui/material'
+import { Avatar, debounce, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import styled from 'styled-components'
 import { deepOrange } from '@mui/material/colors'
 import { jwtDecode } from 'jwt-decode'
+import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom'
 
+const Star = styled.span`
+    font-size: 30px;
+    cursor: pointer;
+    color: ${props => (props.selected ? '#ffa500' : 'grey')};
+    &:hover,
+    &:hover ~ & {
+      color: #ffa500;
+    }
+  `
 export const ManageOrder = () => {
   const [initiatorOrders, setInitiatorOrders] = useState([])
   const [participantOrders, setParticipantOrders] = useState([])
+  const [ratedUid,setRatedUid] = useState('')
+  const [participantOrderUid,setParticipantOrderUid]=useState('')
+  const [ratingRole,setRatingRole] = useState('')
+  const navigate = useNavigate()
   const decoded = jwtDecode(localStorage.getItem('userToken'))
   const userUid = decoded.userUId
 
@@ -33,7 +50,7 @@ export const ManageOrder = () => {
       })
   }
 
-  const clickParticipantButton = (uid, status) => {
+  const clickParticipantButton = (uid, status,rateduid,role) => {
     if (status === 'Waiting for participants to complete') {
       axios.put(`http://localhost:8000/order/updateOrderStatus/${uid}`).then(response => {
         window.location.reload()
@@ -42,8 +59,23 @@ export const ManageOrder = () => {
           console.error('Error updating order status:', error)
         })
     }
+    else if(status === 'Complete'){
+      setPopupVisible(true)
+      setRatedUid(rateduid)
+      setParticipantOrderUid(uid)
+      setRatingRole(role)
+    }
+  }
 
-
+  const clickParticipantAvatar = (uid, status,rateduid,role) => {
+    if(status === 'Complete'){
+      setPopupVisible(true)
+      setRatedUid(rateduid)
+      setParticipantOrderUid(uid)
+      setRatingRole(role)
+    }else {
+      navigate(`/rating/${rateduid}`)
+    }
   }
 
   const fetchInitiatorOrders = async () => {
@@ -72,7 +104,8 @@ export const ManageOrder = () => {
           username: order.username,
           quantity: order.quantity,
           orderId: order.orderId,
-          rating: order.overallRating
+          rating: order.overallRating,
+          orderUserUid:order.orderUserUid
         }))
       }))
       setInitiatorOrders(formattedData)
@@ -95,11 +128,15 @@ export const ManageOrder = () => {
         totalPrice:data.totalPrice,
         status: data.product.status,
         imgURL: data.product.imgURL,
+        ratedUid:data.product.creator.uid,
+        orderStatus:data.status,
         buttonContent:
           data.product.status === 'Waiting for more participants' || data.status === 'Waiting to start'
             ? null
             : (data.product.status === 'Waiting for participants to complete' ? 'complete'
-              : (data.product.status === 'Complete' ? 'rate' : null))
+              : (data.status === 'Rated' ? null
+                  :(data.product.status === 'Complete' ? 'rate':null)
+              ))
         ,
         buttonColor:
           data.product.status === 'Waiting for more participants' || data.status === 'Waiting to start'
@@ -131,6 +168,7 @@ export const ManageOrder = () => {
 
   const handleDeleteparticipant = (orderId) => {
     deleteOrder(orderId)
+    fetchInitiatorOrders()
   }
 
   useEffect(() => {
@@ -171,187 +209,27 @@ export const ManageOrder = () => {
     }))
   }
 
-  const Container = styled.div`
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    padding: 20px;
-  `
 
-  const Section = styled.div`
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-  `
-
-  const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  `
-
-  const OrderCard = styled.div`
-    background-color: #FAFAFA;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-  `
-
-  const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  `
-
-  const Users = styled.div`
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  `
-
-  const User = styled.div`
-    text-align: center;
-    width: 75px;
-    height: 120px;
-    position: relative;
-  `
-
-  const UserImage = styled.img`
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-bottom: 5px;
-  `
-
-  const Rating = styled.div`
-    font-size: 14px;
-    color: #ffa500;
-  `
-
-  const Button = styled.button`
-    display: block;
-    width: 100px;
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #ffa500;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 auto;
-  `
-
-  const CompleteButton = styled(Button)`
-    margin: 0;
-  `
-
-  const Popup = styled.div`
-    display: ${props => (props.visible ? 'block' : 'none')};
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-    box-sizing: border-box;
-  `
-
-  const PopupContent = styled.div`
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    position: relative;
-    box-sizing: border-box;
-  `
-
-  const CloseButton = styled.span`
-    color: #999;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-
-    &:hover,
-    &:focus {
-      color: #000;
-      text-decoration: none;
-    }
-  `
-
-  const Stars = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  `
-
-  const Star = styled.span`
-    font-size: 30px;
-    cursor: pointer;
-    color: ${props => (props.selected ? '#ffa500' : '#ccc')};
-
-    &:hover,
-    &:hover ~ & {
-      color: #ffa500;
-    }
-  `
-
-  const Textarea = styled.textarea`
-    width: 100%;
-    height: 100px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    resize: none;
-    box-sizing: border-box;
-  `
 
   const [popupVisible, setPopupVisible] = useState(false)
   const [selectedRating, setSelectedRating] = useState(0)
   const [reviewText, setReviewText] = useState('')
+  const [hoverRating, setHoverRating] = useState(0)
+  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
 
-  useEffect(() => {
-    const highlightStars = (rating) => {
-      const stars = document.querySelectorAll('.star')
-      stars.forEach(star => {
-        if (star.getAttribute('data-rating') <= rating) {
-          star.classList.add('selected')
-        } else {
-          star.classList.remove('selected')
-        }
-      })
-    }
 
-    const stars = document.querySelectorAll('.star')
-    stars.forEach(star => {
-      star.addEventListener('mouseover', () => {
-        const rating = star.getAttribute('data-rating')
-        highlightStars(rating)
-      })
+  const handleMouseOver = (rating) => {
+    setHoverRating(rating)
+  }
 
-      star.addEventListener('mouseout', () => {
-        highlightStars(selectedRating)
-      })
+  const handleMouseOut = () => {
+    setHoverRating(0)
+  }
 
-      star.addEventListener('click', () => {
-        const rating = star.getAttribute('data-rating')
-        setSelectedRating(rating)
-        highlightStars(rating)
-      })
-    })
-  }, [selectedRating])
+  const handleClick = (rating) => {
+    setSelectedRating(rating)
+  }
+
 
   const handleCompleteClick = () => {
     setPopupVisible(true)
@@ -361,9 +239,22 @@ export const ManageOrder = () => {
     setPopupVisible(false)
   }
 
-  const handleSendReview = () => {
+  const handleSendReview = async(role) => {
     if (selectedRating && reviewText) {
-      alert(`Rating: ${selectedRating} stars\nReview: ${reviewText}`)
+      try {
+        const response = await axios.post('http://localhost:8000/rate/ratings',
+          {
+            raterUid:userUid,
+            ratedUid:ratedUid,
+            rating:selectedRating,
+            comment:reviewText,
+            role:role,
+            participantOrderUid,
+          })
+          setFeedback({ open: true, message: 'Successfully submitted！', severity: 'success' })
+      } catch (error) {
+        setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' })
+      }
       setPopupVisible(false)
       setReviewText('')
       setSelectedRating(0)
@@ -372,10 +263,20 @@ export const ManageOrder = () => {
     }
   }
 
+  const handleClose = () => {
+    if (feedback.severity === 'success') {
+      setFeedback({ ...feedback, open: false })
+      fetchParticipantOrders()
+      navigate('/manage')
+    } else {
+      setFeedback({ ...feedback, open: false })
+    }
+  }
+
   return (
     <div className="order-management">
       <section className="initiator-section">
-        {initiatorOrders.length > 0 && <h2>Initiator Orders</h2>}
+        {initiatorOrders.length > 0 ? <h2>Initiator Orders</h2>:<h2>No Initiator Orders</h2>}
         <div className="order-row">
           {initiatorOrders.map((order) => (
             <div className="initiator-order-card" key={order.orderUid}>
@@ -389,7 +290,9 @@ export const ManageOrder = () => {
                       <span className="participant-title-right">{`${participant.quantity}`}</span>
                     </span>
                     <Avatar className="participant-avatar"
-                            sx={{ bgcolor: '#b15f45', marginLeft: '17px' }}>{participant.username[0]} </Avatar>
+                            sx={{ bgcolor: '#b15f45', marginLeft: '17px',cursor:'pointer'}}
+                            onClick={()=>clickParticipantAvatar(participant.orderId,order.status,participant.orderUserUid,'participant')}
+                    >{participant.username[0]} </Avatar>
                     <button className="participant-delete"
                             onClick={() => handleDeleteparticipant(participant.orderId)}>×
                     </button>
@@ -424,7 +327,7 @@ export const ManageOrder = () => {
         </div>
       </section>
       <section className="participant-section">
-        <h2>Participant Orders</h2>
+        {participantOrders.length > 0 ? <h2>Participant Orders</h2>:<h2>No Participant Orders</h2>}
         <div className="order-row">
           {participantOrders.map((order) => (
             <div className="participant-order-card" key={order.orderUid}>
@@ -447,7 +350,7 @@ export const ManageOrder = () => {
                 {order.buttonContent && <button
                   style={{ backgroundColor: order.buttonColor }}
                   className="complete-button"
-                  onClick={() => clickParticipantButton(order.orderUid, order.status)}>
+                  onClick={() => clickParticipantButton(order.orderUid, order.status,order.ratedUid,'initiator')}>
                   {order.buttonContent}
                 </button>}
               </div>
@@ -455,25 +358,54 @@ export const ManageOrder = () => {
           ))}
         </div>
       </section>
-      <Popup visible={popupVisible} onClick={(e) => e.target.id === 'rating-popup' && handleCloseClick()}>
-        <PopupContent>
-          <CloseButton onClick={handleCloseClick}>&times;</CloseButton>
-          <Stars>
-            <Star className="star" data-rating="1" selected={selectedRating >= 1}>&#9733;</Star>
-            <Star className="star" data-rating="2" selected={selectedRating >= 2}>&#9733;</Star>
-            <Star className="star" data-rating="3" selected={selectedRating >= 3}>&#9733;</Star>
-            <Star className="star" data-rating="4" selected={selectedRating >= 4}>&#9733;</Star>
-            <Star className="star" data-rating="5" selected={selectedRating >= 5}>&#9733;</Star>
-          </Stars>
-          <Textarea
+      <div className='popup' style={{ display: popupVisible ? 'block' : 'none' }} onClick={(e) => e.target.id === 'rating-popup' && handleCloseClick()}>
+        <div className='popup-content'>
+          <button className='closeButton' onClick={handleCloseClick}>&times;</button>
+          <div className='stars'>
+            {[1, 2, 3, 4, 5].map(rating => (
+              <Star
+                key={rating}
+                data-rating={rating}
+                selected={hoverRating >= rating || selectedRating >= rating}
+                onMouseOver={() => handleMouseOver(rating)}
+                onMouseOut={handleMouseOut}
+                onClick={() => handleClick(rating)}
+              >
+                &#9733;
+              </Star>
+            ))}
+          </div>
+          <TextField
+            sx={{width:'100%',marginBottom:'20px'}}
             id="review-text"
             placeholder="Write your review here..."
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
+            multiline
+            rows={4}
           />
-          <Button id="send-review" onClick={handleSendReview}>Send</Button>
-        </PopupContent>
-      </Popup>
+          {/*<TextField*/}
+          {/*  label="Enter Text"*/}
+          {/*  variant="outlined"*/}
+          {/*  value={reviewText}*/}
+          {/*  name="review"*/}
+          {/*  onChange={handleChange}*/}
+          {/*  fullWidth*/}
+          {/*/>*/}
+          <button className='button' id="send-review" onClick={()=>handleSendReview(ratingRole)}>Send</button>
+        </div>
+      </div>
+      <Dialog open={feedback.open} onClose={handleClose}>
+        <DialogTitle>{feedback.severity === 'success' ? 'Success' : 'Error'}</DialogTitle>
+        <DialogContent>
+          <Typography sx={{whiteSpace:'pre'}}>{feedback.message}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

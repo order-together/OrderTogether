@@ -204,27 +204,27 @@ h2 {
     cursor: pointer;
 }
 
-.stars {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
+/*.stars {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin-bottom: 20px;*/
+/*}*/
 
-.star {
-    font-size: 30px;
-    cursor: pointer;
-    color: #ccc;
-}
+/*.star {*/
+/*    font-size: 30px;*/
+/*    cursor: pointer;*/
+/*    color: #ccc;*/
+/*}*/
 
-.star.selected,
-.star:hover,
-.star:hover ~ .star {
-    color: #ffa500;
-}
+/*.star.selected,*/
+/*.star:hover,*/
+/*.star:hover ~ .star {*/
+/*    color: #ffa500;*/
+/*}*/
 
-.star:hover ~ .star {
-    color: #ccc;
-}
+/*.star:hover ~ .star {*/
+/*    color: #ccc;*/
+/*}*/
 
 textarea {
     width: 100%;

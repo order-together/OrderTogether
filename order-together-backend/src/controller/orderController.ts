@@ -75,6 +75,7 @@ export class orderController {
                     orderId: order.uid,
                     quantity: order.quantity,
                     username: order.user.username,
+                    orderUserUid:order.user.uid,
                     overallRating: order.user.overallRating
                 });
             });
@@ -175,8 +176,8 @@ export class orderController {
 
             const orders = await OrderEntity.find({
                 where: {user: {id: user.id}},
-                relations: ["product"],
-                select: ["quantity", "uid", "totalPrice", "product"]
+                relations: ["product","product.creator"],
+                select: ["quantity", "uid", "totalPrice","status", "product"]
             });
 
             if (!orders.length) {

@@ -3,6 +3,7 @@ import {IsDecimal, IsInt} from "class-validator";
 import {BaseTemplate} from "./base.entity";
 import {UserEntity} from "./user.entity";
 import {ProductEntity} from "./product.entity";
+import {RatingEntity} from "./rate.entity";
 
 
 @Entity('order_together_order')
@@ -28,4 +29,7 @@ export class OrderEntity extends BaseTemplate {
 
     @ManyToOne( ()=> ProductEntity, product=>product.orders)
     product:ProductEntity
+
+    @OneToMany(() => RatingEntity, rating => rating.participantOrder)
+    ratings: RatingEntity[];
 }

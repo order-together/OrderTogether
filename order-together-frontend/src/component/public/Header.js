@@ -3,11 +3,24 @@ import '../main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
+import { useEffect, useState } from 'react'
 export const Header = () => {
   const navigate = useNavigate()
+  const [token, setToken] = useState('')
+
   const handleClickNavUser = () =>{
+    if (token === ''){
+      navigate('/login')
+    }
+    else {
       navigate('/userInfo')
+    }
+
   }
+
+  useEffect(() => {
+    localStorage.getItem('userToken') && setToken(localStorage.getItem('userToken'))
+  }, [])
 
   return (
     <div id="header" className="header">

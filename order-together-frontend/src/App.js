@@ -12,6 +12,7 @@ import { JointOrder } from './component/jointOrder/JointOrder.js'
 import { ManageOrder } from './component/manageOrder/ManageOrder.js'
 import { Rating } from './component/userInfo/Rating.js'
 import { UserInfo } from './component/userInfo/UserInfo.js'
+import { Popup } from './component/manageOrder/Popup.js'
 
 function App () {
   return (
@@ -25,7 +26,9 @@ function App () {
           <Route path="joint/:uid" element={<JointOrder/>}/>
           <Route path="manage" element={<ManageOrder/>}/>
           <Route path="rating" element={<Rating/>}/>
+          <Route path="rating/:userUid" element={<Rating/>}/>
           <Route path="userInfo" element={<UserInfo/>}/>
+          <Route path="popup" element={<Popup/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>
