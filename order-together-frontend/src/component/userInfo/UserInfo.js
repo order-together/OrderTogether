@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import './styles.css'
 import { useLocation, useNavigate } from 'react-router-dom'
