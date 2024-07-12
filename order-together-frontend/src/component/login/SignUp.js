@@ -8,7 +8,16 @@ import Typography from '@mui/material/Typography'
 import { Box, Stack } from '@mui/system'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Checkbox, FormControlLabel, Grid, IconButton, InputAdornment } from '@mui/material'
+import {
+  Checkbox, Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputAdornment
+} from '@mui/material'
 import GoogleIcon from '@mui/icons-material/Google'
 
 import { signUpRequest, usernameExistedCheck } from '../../action/user/userAction'
@@ -25,6 +34,7 @@ export const SignUp = () => {
   const [isSubscribe, setIsSubscribe] = useState(false)
   const [usernameCheckRes, setusernameCheckRes] = useState({})
   const [isCheckingBackEnd, setIsCheckingBackEnd] = useState(false)
+  const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
 
   const [validationRes, setValidationRes] = useState({
     isValid: null,
@@ -55,6 +65,15 @@ export const SignUp = () => {
         errs: newErrs
       }
     })
+  }
+
+  const handleClose = () => {
+    if (feedback.severity === 'success') {
+      setFeedback({ ...feedback, open: false })
+      navigate('/login')
+    } else {
+      setFeedback({ ...feedback, open: false })
+    }
   }
 
   const handleOnBlur = async event => {
@@ -108,7 +127,7 @@ export const SignUp = () => {
 
       if (results.signUp) {
         localStorage.setItem('signupusername', formData.username)
-        navigate('/confirm-username')
+        setFeedback({ open: true, message: 'Successfully signed up！Please log in.', severity: 'success' })
       } else {
         setValidationRes(prevState => ({
           ...prevState,
@@ -125,6 +144,7 @@ export const SignUp = () => {
         {}
       )
       setValidationRes({ isValid: false, errs: validationErrs })
+      setFeedback({ open: true, message: `Error: ${err.message}`, severity: 'error' })
     }
   }
 
@@ -204,7 +224,6 @@ export const SignUp = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 id="username"
                 label="Username"
                 name="username"
@@ -221,6 +240,7 @@ export const SignUp = () => {
                   '.MuiOutlinedInput-root': {
                     bgcolor: '#F9FAFB',
                     borderRadius: '8px',
+                    width:'400px',
                     '&:hover fieldset': {
                       borderColor: '#0769DA'
                     },
@@ -249,7 +269,6 @@ export const SignUp = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 name="password"
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
@@ -275,6 +294,7 @@ export const SignUp = () => {
                   '.MuiOutlinedInput-root': {
                     bgcolor: '#F9FAFB',
                     borderRadius: '8px',
+                    width:'400px',
                     '&:hover fieldset': {
                       borderColor: '#0769DA'
                     },
@@ -329,7 +349,7 @@ export const SignUp = () => {
             </Box>
             <Box
               sx={{
-                width: { md: '434px' },
+                width: { md: '400px' },
                 height: '135px',
                 mt: '24px'
               }}
@@ -350,13 +370,12 @@ export const SignUp = () => {
                   mb: 2,
                   padding: '10px 20px',
                   gap: '8px',
-                  backgroundColor: validationRes.isValid && isSubscribe ? '#0769DA' : 'lightgray',
+                  backgroundColor: '#0769DA',
                   ':hover': {
                     bgcolor: '#0769DA',
                     color: 'white'
                   }
                 }}
-                disabled={!validationRes.isValid || isCheckingBackEnd}
               >
                 {isCheckingBackEnd ? <CircularWaiting size={20}/> : 'Sign Up'}
               </Button>
@@ -379,6 +398,17 @@ export const SignUp = () => {
           </Box>
         </Container>
       </Box>
+      <Dialog open={feedback.open} onClose={handleClose}>
+        <DialogTitle>{feedback.severity === 'success' ? 'Success' : 'Error'}</DialogTitle>
+        <DialogContent>
+          <Typography sx={{whiteSpace:'pre'}}>{feedback.message}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }

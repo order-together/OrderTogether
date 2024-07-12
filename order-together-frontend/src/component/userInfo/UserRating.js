@@ -1,6 +1,5 @@
 import React from 'react';
 import './UserRating.css';
-//import userIcon from './user-icon.png';
 
 export const UserRating = () => {
   return (

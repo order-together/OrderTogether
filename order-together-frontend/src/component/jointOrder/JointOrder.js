@@ -1,7 +1,7 @@
 import './JointOrder.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -16,6 +16,7 @@ export const JointOrder = () => {
   const [error, setError] = useState('')
   const decoded = jwtDecode(localStorage.getItem('userToken'))
   const userUid = decoded.userUId
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -43,6 +44,10 @@ export const JointOrder = () => {
       .catch(error => {
         console.error('There was an error fetching the products!', error)
       })
+  }
+
+  const handleClickAvatar = (initiatorUid)=>{
+    navigate(`/rating/${initiatorUid}`)
   }
 
   const handleClose = () => {
@@ -86,7 +91,9 @@ export const JointOrder = () => {
           </div>
           <div className="product-rating rating">
             <Avatar className="participant-avatar"
-                    sx={{ bgcolor: '#b15f45', marginLeft: '30px' }}>{product.initiator && product.initiator[0]} </Avatar>
+                    sx={{ bgcolor: '#b15f45', marginLeft: '30px',cursor:'pointer' }}
+                    onClick={()=>handleClickAvatar(product.initiatorUid)}
+            >{product.initiator && product.initiator[0]} </Avatar>
             {Array.from({ length: 5 }, (_, i) => (
               <span key={i} className={i < product.rating ? 'star filled' : 'star'}>★</span>
             ))}

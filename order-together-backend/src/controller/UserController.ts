@@ -4,6 +4,7 @@ import {Request, Response} from 'express'
 import {uid} from "uid";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import {ProductEntity} from "../entity/product.entity";
 
 const repo = gDB.getRepository(UserEntity)
 const saltRounds = +process.env.BCRYPT_SALT
@@ -138,6 +139,23 @@ class UserController {
             return response.status(200).send({ message: 'User information updated successfully.', user });
         } catch (e) {
             return response.status(500).send({ message: 'Error updating user information.' });
+        }
+    }
+
+    static getUserByUid = async (req: Request, res: Response) => {
+        try {
+            const user = await UserEntity.findOne({where: {uid: req.params.uid}})
+            if (!user) {
+                return res.status(404).send({
+                    message: 'user not found'
+                })
+            }
+            return res.status(200).send(user)
+        } catch (e) {
+            console.log(e)
+            return res.status(500).send({
+                message: 'There is something wrong with server, please try again later'
+            })
         }
     }
 

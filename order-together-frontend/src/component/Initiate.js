@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Dialog, DialogTitle, DialogContent, Typography, DialogActions } from '@mui/material'
 import { date } from 'yup'
+import { CircularProgress } from '@mui/material';
 
 export const Initiate = () => {
   const decoded = jwtDecode(localStorage.getItem('userToken'))
@@ -14,6 +15,7 @@ export const Initiate = () => {
   const [feedback, setFeedback] = useState({ open: false, message: '', severity: '' })
   const boxStyle = { marginBottom: '30px' }
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
   const textFieldStyle = {
     '& .MuiOutlinedInput-root': {
       marginTop: '5px',
@@ -80,18 +82,16 @@ export const Initiate = () => {
     }
   }
   const handleSubmit = async () => {
+    setLoading(true)
     try {
       const imageUrl = formData.imgURL
-      console.log(`formData==>${JSON.stringify(formData)}`)
-      console.log(`imageUrl==>${imageUrl}`)
       const safetyResponse = await axios.post('http://localhost:8000/product/safeDetect', { imageUrl })
-      console.log(`safetyResponse==>${JSON.stringify(safetyResponse)}`)
       if (safetyResponse.data.message === 'Safe') {
         const postResponse = await axios.post('http://localhost:8000/product/initiate', formData)
         setFeedback({ open: true, message: 'Product initiated successfully!', severity: 'success' })
       } else {
         const safetyMessage =
-        `Sorry, the image safe detect was not passed\n`+ `\n`+`The results of the detect are listed below:\n`+
+        `Sorry, the image safe detect was not passed.\n`+ `\n`+`The results of the detect are listed below:\n`+
         `adult: ${safetyResponse.data.details['adult']}\n`+
         `spoof: ${safetyResponse.data.details['spoof']}\n`+
         `medical: ${safetyResponse.data.details['medical']}\n`+
@@ -102,6 +102,8 @@ export const Initiate = () => {
       }
     } catch (error) {
       setFeedback({ open: true, message: `Error: ${error.message}`, severity: 'error' })
+    }finally {
+      setLoading(false)
     }
   }
 
@@ -254,6 +256,7 @@ export const Initiate = () => {
           </TextField>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {loading && <CircularProgress sx={{height:'60px'}}/>}
           <Button variant="contained" onClick={handleSubmit}>Save</Button>
         </Box>
         <Dialog open={feedback.open} onClose={handleClose}>

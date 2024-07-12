@@ -24,7 +24,7 @@
 
 .initiator-order-card {
     flex: 1 1 48%;
-    width: 48%;
+    max-width: 48%;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,7 +82,7 @@
 }
 .participant-order-card {
     flex: 1 1 48%;
-    width: 48%;
+    max-width: 48%;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -191,3 +191,77 @@
 .participant-order-card-details{
     margin-top: 5px;
 }
+
+.popup {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+    box-sizing: border-box;
+}
+
+.popup-content{
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.closeButton{
+    color: #999;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    &:hover,
+    &:focus {
+        color: #000;
+        text-decoration: none;
+    }
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+
+.textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.button{
+    display: block;
+    width: 100px;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ffa500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
