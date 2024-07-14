@@ -130,6 +130,7 @@ export const ManageOrder = () => {
         imgURL: data.product.imgURL,
         ratedUid:data.product.creator.uid,
         orderStatus:data.status,
+        productUid:data.product.uid,
         buttonContent:
           data.product.status === 'Waiting for more participants' || data.status === 'Waiting to start'
             ? null
@@ -263,6 +264,10 @@ export const ManageOrder = () => {
     }
   }
 
+  const navToSingleProduct = (productUid)=>{
+    navigate(`/joint/${productUid}`)
+  }
+
   const handleClose = () => {
     if (feedback.severity === 'success') {
       setFeedback({ ...feedback, open: false })
@@ -281,7 +286,7 @@ export const ManageOrder = () => {
           {initiatorOrders.map((order) => (
             <div className="initiator-order-card" key={order.orderUid}>
               {/*<button className="delete-order" onClick={() => removeOrder('initiatorOrders', order.id)}>×</button>*/}
-              <div className="order-header">{order.orderUid} - {order.name}</div>
+              <div className="order-header" onClick={()=>navToSingleProduct(order.orderUid)}>{order.orderUid} - {order.name}</div>
               <div className="participants">
                 {order.participants.map((participant, index) => (
                   <div key={index} className="participant">
@@ -297,9 +302,15 @@ export const ManageOrder = () => {
                             onClick={() => handleDeleteparticipant(participant.orderId)}>×
                     </button>
                     <div className="rating">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <span key={i} className={i < participant.rating ? 'star filled' : 'star'}>★</span>
-                      ))}
+                      {Array.from({ length: 5 }, (_, i) => {
+                        if (i < Math.floor(participant.rating)) {
+                          return <span key={i} className="star filled">★</span>;
+                        } else if (i < Math.ceil(participant.rating)) {
+                          return <span key={i} className="star half-filled">★</span>;
+                        } else {
+                          return <span key={i} className="star">★</span>;
+                        }
+                      })}
                     </div>
                   </div>
                 ))}
@@ -334,7 +345,7 @@ export const ManageOrder = () => {
               <img className="order-card-img" src={order.imgURL}/>
               <div className="order-card-right">
                 {/*<button className="delete-order" onClick={() => removeOrder('participants', order.id)}>×</button>*/}
-                <div className="order-info">{order.orderUid} - {order.name}</div>
+                <div className="order-info" onClick={()=>navToSingleProduct(order.productUid)}>{order.orderUid} - {order.name}</div>
                 <span className="participant-order-card-details">
                     <span className="order-card-status-status">Quantity: </span>
                     <span className="order-card-status-content"> {order.quantity}</span>

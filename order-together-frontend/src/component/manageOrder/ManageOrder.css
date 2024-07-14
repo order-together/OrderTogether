@@ -8,7 +8,7 @@
     font-family: Arial, sans-serif;
 }
 .order-header{
-
+    cursor: pointer;
     font-weight: 600;
 }
 
@@ -91,8 +91,11 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px;
+    overflow: hidden;
     .order-card-img{
-        width: 60px;
+        width: 15%;
+        height: 120px;
+        object-fit: cover;
         margin-right: 50px;
         margin-left: 30px;
     }
@@ -122,6 +125,7 @@
 }
 .order-info{
     font-weight: 600;
+    cursor: pointer;
 }
 .participant {
     display: flex;
@@ -160,12 +164,32 @@
     text-align: center;
 }
 
+/*.rating .star {*/
+/*    color: #ccc;*/
+/*}*/
+
+/*.rating .star.filled {*/
+/*    color: #f0d130;*/
+/*}*/
 .rating .star {
     color: #ccc;
 }
 
-.rating .star.filled {
-    color: #f0d130;
+.rating .filled {
+    color: #ff8c00;
+}
+
+.rating .half-filled::before {
+    content: '★';
+    position: absolute;
+    clip: rect(0px, 8px, 30px, 0px);
+    color: #ff8c00;
+}
+.rating .half-filled {
+    position: relative;
+}
+.rating .half-filled::after {
+    color: #ccc;
 }
 
 .start-button, .complete-button {
@@ -175,10 +199,9 @@
     cursor: pointer;
     font-size: 14px;
     margin-top: 10px;
-    font-weight: 600;
     color: white;
     position: absolute;
-    right:40px;
+    right:20px;
     bottom: 10px;
     font-weight: 600;
 }
