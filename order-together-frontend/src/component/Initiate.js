@@ -53,10 +53,10 @@ export const Initiate = () => {
   const productLinkTextFieldStyle = {
     '& .MuiOutlinedInput-root': {
       marginTop: '5px',
-      overflow: 'auto',
       '& .MuiInputBase-input': {
-        height: '60px',
         width: '320px',
+
+
       },
     },
   }
@@ -129,7 +129,7 @@ export const Initiate = () => {
         <Box
           sx={{ paddingRight: '50px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
           {displayedImage ? (
-            <img src={displayedImage} style={{ width: '350px', height: 'auto' }} alt="Uploaded"/>
+            <img src={displayedImage} style={{ width: '350px', height: 'auto',maxHeight:'300px',objectFit:'cover'}} alt="Uploaded"/>
           ) : (
             <Box
               sx={{
@@ -169,7 +169,7 @@ export const Initiate = () => {
           name="productURL"
           onChange={handleChange}
           sx={productLinkTextFieldStyle}
-          multiline
+          // multiline
         >
         </TextField>
       </Box>

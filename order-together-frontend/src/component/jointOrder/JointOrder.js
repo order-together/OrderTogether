@@ -32,7 +32,7 @@ export const JointOrder = () => {
     setProduct(prevProduct => ({
       ...prevProduct,
       postageShare: postageShare,
-      jointOrderTotal: (Number(product.unitPrice) + Number(postageShare)).toFixed(2)
+      jointOrderTotal: (Number(product.unitPrice)*Number(value) + Number(postageShare)).toFixed(2)
     }))
   }
 
@@ -91,12 +91,14 @@ export const JointOrder = () => {
           </div>
           <div className="product-rating rating">
             <Avatar className="participant-avatar"
-                    sx={{ bgcolor: '#b15f45', marginLeft: '30px',cursor:'pointer' }}
+                    sx={{ bgcolor: '#b15f45',cursor:'pointer',display:'flex'}}
                     onClick={()=>handleClickAvatar(product.initiatorUid)}
             >{product.initiator && product.initiator[0]} </Avatar>
-            {Array.from({ length: 5 }, (_, i) => (
-              <span key={i} className={i < product.rating ? 'star filled' : 'star'}>★</span>
-            ))}
+            <div>
+              {Array.from({ length: 5 }, (_, i) => (
+                <span key={i} className={i < product.rating ? 'star filled' : 'star'}>★</span>
+              ))}
+            </div>
             <p style={{ marginTop: '0px' }}>Initiator:&nbsp;&nbsp;{product.initiator}</p>
           </div>
         </div>

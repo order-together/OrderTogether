@@ -89,11 +89,17 @@ export const Rating = () => {
           <p className="user-name">{userInfo.username}</p>
           <div className="user-rating">
             <div className="rating-stars">
-              {Array.from({ length: 5 }, (_, i) => (
-                <span key={i} className={i < userInfo.overallRating ? 'star filled' : 'star'}>★</span>
-              ))}
+              {Array.from({ length: 5 }, (_, i) => {
+                if (i < Math.floor(userInfo.overallRating)) {
+                  return <span key={i} className="star filled">★</span>;
+                } else if (i < Math.ceil(userInfo.overallRating)) {
+                  return <span key={i} className="star half-filled">★</span>;
+                } else {
+                  return <span key={i} className="star">★</span>;
+                }
+              })}
             </div>
-            <span>{userInfo.overallRating}</span>
+            <span style={{marginLeft:'5px'}}>{userInfo.overallRating}</span>
           </div>
         </div>
       </div>
@@ -108,7 +114,7 @@ export const Rating = () => {
           {initiatorRatings.map(rating => (
             <div className="rating-card">
               <div className="card-header">
-                <p className="order-id">{rating.participantOrder.uid}</p>
+                <p className="order-id">{rating.participantOrder.product.uid}</p>
                 <p className="timestamp">{formatDistanceToNow(new Date(rating.createdAt), { addSuffix: true })}</p>
               </div>
               <div className="card-body">
@@ -128,7 +134,7 @@ export const Rating = () => {
           {participantRatings.map(rating => (
             <div className="rating-card">
               <div className="card-header">
-                <p className="order-id">{rating.participantOrder.product.uid}</p>
+                <p className="order-id">{rating.participantOrder.uid}</p>
                 <p className="timestamp">{formatDistanceToNow(new Date(rating.createdAt), { addSuffix: true })}</p>
               </div>
               <div className="card-body">

@@ -39,35 +39,30 @@ class RatingController {
             if (ratedUser) {
                 const initiatorRatings = await ratingRepo.find({ where: { ratedUser: Equal(ratedUser.id), role: 'initiator' } });
                 const participantRatings = await ratingRepo.find({ where: { ratedUser: Equal(ratedUser.id), role: 'participant' } });
-                console.log(`initiatorRatings==>${JSON.stringify(initiatorRatings)}`)
-                console.log(`participantRatings==>${JSON.stringify(participantRatings)}`)
-
                 const initiatorRatingAverage = initiatorRatings.length > 0
                     ? initiatorRatings.reduce((acc, curr) => acc + curr.rating, 0) / initiatorRatings.length
                     : 0;
-                console.log(`initiatorRatingAverage==>${JSON.stringify(initiatorRatingAverage)}`)
                 const participantRatingAverage = participantRatings.length > 0
                     ? participantRatings.reduce((acc, curr) => acc + curr.rating, 0) / participantRatings.length
                     : 0;
-                console.log(`participantRatingAverage==>${JSON.stringify(participantRatingAverage)}`)
-
                 ratedUser.initiatorRating = parseFloat(initiatorRatingAverage.toFixed(2));
                 ratedUser.participantRating = parseFloat(participantRatingAverage.toFixed(2));
 
                 const validRatings = [];
-                if (initiatorRatingAverage > 0) validRatings.push(initiatorRatingAverage);
-                if (participantRatingAverage > 0) validRatings.push(participantRatingAverage);
+                if (initiatorRatings.length  > 0)  initiatorRatings.forEach(e=>validRatings.push(e));
+                if (participantRatings.length > 0) participantRatings.forEach(e=>validRatings.push(e));
 
                 ratedUser.overallRating = validRatings.length > 0
-                    ? parseFloat((validRatings.reduce((acc, curr) => acc + curr, 0) / validRatings.length).toFixed(2))
+                    ? parseFloat((validRatings.reduce((acc, curr) => acc + curr.rating, 0) / validRatings.length).toFixed(2))
                     : 0;
 
                 await userRepo.save(ratedUser);
 
-                const order = await OrderEntity.findOne({ where: { uid: participantOrderUid } })
-
-                order.status = 'Rated'
-                await order.save()
+                if (role === 'initiator'){
+                    const order = await OrderEntity.findOne({ where: { uid: participantOrderUid } })
+                    order.status = 'Rated'
+                    await order.save()
+                }
             }
 
             return response.status(201).send({ message: 'Rating added successfully.', newRating });

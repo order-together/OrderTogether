@@ -4,6 +4,7 @@ import {uid} from "uid";
 import {UserEntity} from "../entity/user.entity";
 import {OrderEntity} from "../entity/order.entity";
 import vision from '@google-cloud/vision';
+import {getRepository} from "typeorm";
 
 
 
@@ -57,11 +58,11 @@ class ProductController {
     // Get all products.
     static getProducts = async (req: Request, res: Response) => {
         try {
-            const products = await ProductEntity.find({
-                order: {
-                    createdAt: 'DESC',
-                },
-            })
+            const products = await  ProductEntity
+                .createQueryBuilder("product")
+                .where("product.targetQuantity - product.currentQuantity > :value", { value: 0 })
+                .orderBy("product.createdAt", "DESC")
+                .getMany();
             return res.status(200).send(products)
         } catch (e) {
             console.log(e)

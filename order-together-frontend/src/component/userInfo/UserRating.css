@@ -45,7 +45,6 @@
 }
 
 .user-rating span:last-child {
-    margin-left: 10px;
     font-size: 1em;
 }
 
@@ -105,17 +104,30 @@
     justify-content: space-between;
 }
 
-.rating-stars {
-    font-size: 1.2em;
-    color: #ff8c00;
-}
 
-.star {
+
+.rating-stars .star {
+    font-size: 24px;
     color: #ccc;
 }
 
-.star.filled {
+.rating-stars .filled {
+    font-size: 24px;
     color: #ff8c00;
+}
+
+.rating-stars .half-filled::before {
+    content: '★';
+    position: absolute;
+    clip: rect(0px, 12px, 30px, 0px);
+    color: #ff8c00;
+}
+.rating-stars .half-filled {
+    display: inline-block;
+    position: relative;
+}
+.rating-stars .half-filled::after {
+    color: #ccc;
 }
 
 .timestamp {
