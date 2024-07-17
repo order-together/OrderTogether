@@ -71,11 +71,58 @@ class RatingController {
         }
     }
 
+    // static async getRatings(request: Request, response: Response) {
+    //     try {
+    //         const { userId, role, sortBy } = request.query;
+    //
+    //         const ratedUser = await userRepo.findOne({where:{uid:userId}})
+    //
+    //         let whereCondition = {};
+    //         if (userId) {
+    //             whereCondition = { ...whereCondition, ratedUser: ratedUser };
+    //         }
+    //         if (role) {
+    //             whereCondition = { ...whereCondition, role: role };
+    //         }
+    //
+    //         let orderCondition = {};
+    //         if (sortBy === 'recent') {
+    //             orderCondition = { 'rating.createdAt': 'DESC' };
+    //         } else if (sortBy === 'favorable') {
+    //             orderCondition = { rating: 'DESC' };
+    //         } else if (sortBy === 'critical') {
+    //             orderCondition = { rating: 'ASC' };
+    //         }
+    //
+    //         const ratings = await ratingRepo.createQueryBuilder('rating')
+    //             .leftJoinAndSelect('rating.raterUser', 'rater')
+    //             .leftJoinAndSelect('rating.participantOrder', 'order')
+    //             .leftJoinAndSelect('order.product', 'product')
+    //             .where(whereCondition)
+    //             .orderBy(orderCondition)
+    //             .select([
+    //                 'rating.id',
+    //                 'rating.rating',
+    //                 'rating.comment',
+    //                 'rating.createdAt',
+    //                 'rater.username',
+    //                 'order.id',
+    //                 'order.uid',
+    //                 'product.uid'
+    //             ])
+    //             .getMany();
+    //
+    //         return response.status(200).send(ratings);
+    //     } catch (e) {
+    //         return response.status(500).send({ message: 'Error fetching ratings.' });
+    //     }
+    // }
+
     static async getRatings(request: Request, response: Response) {
         try {
             const { userId, role, sortBy } = request.query;
 
-            const ratedUser = await userRepo.findOne({where:{uid:userId}})
+            const ratedUser = await userRepo.findOne({ where: { uid: userId } });
 
             let whereCondition = {};
             if (userId) {
@@ -85,21 +132,11 @@ class RatingController {
                 whereCondition = { ...whereCondition, role: role };
             }
 
-            let orderCondition = {};
-            if (sortBy === 'recent') {
-                orderCondition = { 'rating.createdAt': 'DESC' };
-            } else if (sortBy === 'favorable') {
-                orderCondition = { rating: 'DESC' };
-            } else if (sortBy === 'critical') {
-                orderCondition = { rating: 'ASC' };
-            }
-
             const ratings = await ratingRepo.createQueryBuilder('rating')
                 .leftJoinAndSelect('rating.raterUser', 'rater')
                 .leftJoinAndSelect('rating.participantOrder', 'order')
                 .leftJoinAndSelect('order.product', 'product')
                 .where(whereCondition)
-                .orderBy(orderCondition)
                 .select([
                     'rating.id',
                     'rating.rating',
@@ -112,11 +149,47 @@ class RatingController {
                 ])
                 .getMany();
 
-            return response.status(200).send(ratings);
+            function quickSort(data, compareFunction) {
+                if (data.length <= 1) {
+                    return data;
+                }
+                const pivot = data[Math.floor(data.length / 2)];
+                const left = [];
+                const right = [];
+                const equal = [];
+
+                for (const item of data) {
+                    const comparison = compareFunction(item, pivot);
+                    if (comparison < 0) {
+                        left.push(item);
+                    } else if (comparison > 0) {
+                        right.push(item);
+                    } else {
+                        equal.push(item);
+                    }
+                }
+                return [...quickSort(left, compareFunction), ...equal, ...quickSort(right, compareFunction)];
+            }
+
+            function sortData(data, sortBy) {
+                if (sortBy === 'recent') {
+                    return quickSort(data, (a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                } else if (sortBy === 'favorable') {
+                    return quickSort(data, (a, b) => b.rating - a.rating);
+                } else if (sortBy === 'critical') {
+                    return quickSort(data, (a, b) => a.rating - b.rating);
+                }
+                return data;
+            }
+
+            const sortedRatings = sortData(ratings, sortBy);
+
+            return response.status(200).send(sortedRatings);
         } catch (e) {
             return response.status(500).send({ message: 'Error fetching ratings.' });
         }
     }
+
 }
 
 export default RatingController;
